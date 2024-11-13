@@ -1,7 +1,22 @@
 <template>
   <div class="app-container">
+    <div data-tauri-drag-region class="titlebar">
+      <div class="titlebar-button" id="titlebar-minimize" @click="minimizeWindow">
+        <i class="fa-solid fa-window-minimize"></i>
+      </div>
+      <div class="titlebar-button" id="titlebar-maximize" @click="maximizeWindow">
+        <i class="fa-solid fa-window-maximize"></i>
+      </div>
+      <div class="titlebar-button" id="titlebar-close" @click="closeWindow">
+        <i class="fa-solid fa-xmark"></i>      
+      </div>
+    </div>
     <!-- Sidebar -->
-    <aside :class="['sidebar', { 'sidebar--extended': isSidebarExtended }]" @mouseover="extendSidebar" @mouseleave="collapseSidebar">
+    <aside
+      :class="['sidebar', { 'sidebar--extended': isSidebarExtended }]"
+      @mouseover="extendSidebar"
+      @mouseleave="collapseSidebar"
+    >
       <nav>
         <ul>
           <!-- Persona List item with icon and animated label -->
@@ -17,7 +32,7 @@
           <!-- App Profile item with icon and animated label -->
           <li @click="setActiveComponent('appProfile')">
             <i class="fa-solid fa-user"></i>
-            <Transition name="slide" >
+            <Transition name="slide">
               <template v-if="isSidebarExtended">
                 <span class="label">App Profile</span>
               </template>
@@ -48,13 +63,15 @@
 import personaList from "/src/components/personaList.vue";
 import appProfile from "/src/components/appProfile.vue";
 import appSettings from "/src/components/appSettings.vue";
-import '@fortawesome/fontawesome-free/css/all.css';
+import { getCurrentWindow } from '@tauri-apps/api/window';
+import "@fortawesome/fontawesome-free/css/all.css";
 
 export default {
   data() {
     return {
       isSidebarExtended: false,
       activeComponent: "personaList", // Default component
+      window: getCurrentWindow()
     };
   },
   components: {
@@ -72,6 +89,15 @@ export default {
     setActiveComponent(componentName) {
       this.activeComponent = componentName;
     },
+    minimizeWindow() {
+      this.window.minimize();
+    },
+    maximizeWindow() {
+      this.window.maximize();
+    },
+    closeWindow() {
+      this.window.close();
+    },
   },
 };
 </script>
@@ -81,7 +107,12 @@ export default {
   display: flex;
   min-height: 100vh;
   min-width: 100vw;
-  background: radial-gradient(circle at top left, rgba(43, 47, 54, 0.95), rgba(27, 30, 35, 0.9) 70%, rgba(17, 20, 23, 1) 100%);
+  background: radial-gradient(
+    circle at top left,
+    rgba(43, 47, 54, 0.95),
+    rgba(27, 30, 35, 0.9) 70%,
+    rgba(17, 20, 23, 1) 100%
+  );
   backdrop-filter: blur(50px);
 }
 
@@ -118,7 +149,6 @@ export default {
   align-items: center;
 }
 
-
 .fa-solid {
   font-size: 20px;
 }
@@ -154,12 +184,41 @@ export default {
 }
 
 /* Slide Transition */
-.slide-enter-active, .slide-leave-active {
+.slide-enter-active,
+.slide-leave-active {
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .slide-enter, .slide-leave-to /* .slide-leave-active in <2.1.8 */ {
   opacity: 0;
   transform: translateX(-20px);
+}
+</style>
+
+<style>
+.titlebar {
+  height: 30px;
+  user-select: none;
+  display: flex;
+  justify-content: flex-end;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.titlebar-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.titlebar-button:hover {
+  background: rgba(87, 39, 39, 0.1);
+}
+.titlebar .fa-solid{
+  color: #d1d1d1;
 }
 </style>

@@ -15,7 +15,8 @@
         "title": "Jester",
         "width": 800,
         "transparent": true,
-        "height": 600
+        "height": 600,
+        "decorations": false
       }
     ],
     "security": {
