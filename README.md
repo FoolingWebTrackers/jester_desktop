@@ -7,13 +7,14 @@ This template should help get you started developing with Tauri + Vue 3 in Vite.
 - [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
 
 
-Make sure you have installed the prerequisites for your OS: https://tauri.app/start/prerequisites/, then run:
-  cd jester-vue
-  deno install
-  deno task tauri android init
+## Make sure you have installed the prerequisites for your OS: https://tauri.app/start/prerequisites/, then run:
+
+```
+cd jester-desktop
+deno install
+```
 
 For Desktop development, run:
-  deno task tauri dev
-
-For Android development, run:
-  deno task tauri android dev
+```
+deno task tauri dev
+```
