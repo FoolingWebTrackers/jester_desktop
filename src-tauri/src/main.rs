@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    jester_desktop_lib::run()
+    jester_vue_lib::run()
 }

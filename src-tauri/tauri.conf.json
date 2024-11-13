@@ -1,16 +1,18 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "jester-desktop",
+  "productName": "jester-vue",
   "version": "0.1.0",
-  "identifier": "com.jester-desktop.app",
+  "identifier": "com.jester-vue.app",
   "build": {
-    "frontendDist": "../src"
+    "beforeDevCommand": "deno task dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "deno task build",
+    "frontendDist": "../dist"
   },
   "app": {
-    "withGlobalTauri": true,
     "windows": [
       {
-        "title": "Jester Desktop",
+        "title": "jester-vue",
         "width": 800,
         "height": 600
       }
