@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "jester-vue",
+  "productName": "jester-desktop",
   "version": "0.1.0",
-  "identifier": "com.jester-vue.app",
+  "identifier": "com.jester-desktop.app",
   "build": {
     "beforeDevCommand": "deno task dev",
     "devUrl": "http://localhost:1420",
