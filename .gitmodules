@@ -1,3 +1,0 @@
-[submodule "src-server"]
-	path = jester-puppeteer-backend
-	url = https://github.com/FoolingWebTrackers/jester-puppeteer-backend

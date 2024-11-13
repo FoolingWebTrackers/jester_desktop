@@ -1,0 +1,121 @@
+[
+    {
+      "id": 1,
+      "name": "Post Nuclear War Survivalist",
+      "description": "A person who is preparing for a nuclear war and its aftermath.",
+      "photo": "profilePhotos/doomguy.jpg",    
+      "urls": [        
+      "https://time.com/6159942/amazon-potassium-iodide-nuclear-products-ukraine-invasion/",
+      "https://www.ncbi.nlm.nih.gov/books/NBK219185/",
+      "https://www.vox.com/future-perfect/24139145/fallout-amazon-prime-video-game-nuclear-war-existential-risk",
+      "https://thebulletin.org/2022/10/nowhere-to-hide-how-a-nuclear-war-would-kill-you-and-almost-everyone-else/",
+      "https://www.amazon.com/NUCLEAR-WAR-Survival-Scenarios-Post-Apocalyptic-ebook/dp/B0DD5N1K54",
+      "https://www.amazon.com.tr/Surviving-Nuclear-Attack-Strategies-Post-Apocalyptic/dp/B0D3J66S2C",
+      "https://www.tandfonline.com/doi/abs/10.1080/00396338.2024.2357486",
+      "https://www.youtube.com/watch?v=HNd7ERHxHmY",
+      "https://apps.dtic.mil/sti/tr/pdf/ADA328301.pdf",
+      "https://www.amazon.com/Nuclear-War-Survival-Skills-Instructions/dp/1634502973",
+      "https://en.wikipedia.org/wiki/Nuclear_War_Survival_Skills",
+      "https://www.ready.gov/sites/default/files/2024-03/ready.gov_nuclear-explosion-hazard-info-sheet.pdf",
+      "https://pubmed.ncbi.nlm.nih.gov/6737669/",
+      "https://www.amazon.com/Shelter-Building-Nuclear-War-Survival/dp/B0C8P6C7K5",
+      "https://www.amazon.com/Nuclear-War-Survival-Skills-Kearny/dp/B0C8P6C7K5",
+      "https://www.cdc.gov/nceh/radiation/emergencies/index.htm",
+      "https://www.nrc.gov/about-nrc/emergency-preparedness.html",
+      "https://www.redcross.org/get-help/how-to-prepare-for-emergencies/types-of-emergencies/nuclear.html",
+      "https://www.amazon.com/Nuclear-War-Survival-Kit/dp/B07H8H7T2S",
+      "https://www.aliexpress.com/item/1005003091845931.html",
+      "https://www.amazon.com/Emergency-Survival-Kit-Nuclear-War/dp/B08P4ZB3W4",
+      "https://www.amazon.com/Nuclear-War-Survival-Handbook/dp/B00R8Z3T5S",
+      "https://www.amazon.com/Nuclear-War-Survival-Kit/dp/B07F8Y6G9H",
+      "https://survivallife.com/nuclear-war-survival-guide/",
+      "https://www.survivopedia.com/nuclear-war-survival-guide/",
+      "https://theprepperjournal.com/nuclear-war-survival-skills/",
+      "https://www.nukepills.com/",
+      "https://store.ki4u.com/products/potassium-iodide-tablets",
+      "https://www.amazon.com/Potassium-Iodide-Tablets-Nuclear-Radiation/dp/B00B2A1VQK",
+      "https://www.aliexpress.com/item/1005003091845931.html",
+      "https://www.amazon.com/Nuclear-War-Survival-Kit/dp/B07H8H7T2S",
+      "https://nukepills.com/",
+      "https://nukepreparedness.org/",
+      "https://survivallife.com/nuclear-war-survival-guide/",
+      "https://theprepperjournal.com/nuclear-war-survival-skills/",
+      "https://nukepills.com/",
+      "http://nuclearnotebook.blogspot.com/",
+      "http://nukewatch.org/"
+]
+
+    },
+    {
+      "id": 2,
+      "name": "Persona 2",
+      "description": "Description of Persona 2",
+      "photo": "path/to/photo2.jpg",
+      "urls": []
+
+    },
+    {
+      "id": 3,
+      "name": "Persona 3",
+      "description": "Description of Persona 3",
+      "photo": "path/to/photo3.jpg",
+      "urls": []
+
+    },
+    {
+      "id": 4,
+      "name": "Persona 4",
+      "description": "Description of Persona 4",
+      "photo": "path/to/photo4.jpg",      
+      "urls": []
+
+    },
+    {
+      "id": 5,
+      "name": "Persona 5",
+      "description": "Description of Persona 5",
+      "photo": "path/to/photo5.jpg",      
+      "urls": []
+
+    },
+    {
+      "id": 6,
+      "name": "Persona 6",
+      "description": "Description of Persona 6",
+      "photo": "path/to/photo6.jpg",      
+      "urls": []
+
+    },
+    {
+      "id": 7,
+      "name": "Persona 7",
+      "description": "Description of Persona 7",
+      "photo": "path/to/photo7.jpg",      
+      "urls": []
+
+    },
+    {
+      "id": 8,
+      "name": "Persona 8",
+      "description": "Description of Persona 8",
+      "photo": "path/to/photo8.jpg",      
+      "urls": []
+
+    },
+    {
+      "id": 9,
+      "name": "Persona 9",
+      "description": "Description of Persona 9",
+      "photo": "path/to/photo9.jpg",      
+      "urls": []
+
+    },
+    {
+      "id": 10,
+      "name": "Persona 10",
+      "description": "Description of Persona 10",
+      "photo": "path/to/photo10.jpg",      
+      "urls": []
+
+    }
+]
