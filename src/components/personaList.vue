@@ -27,8 +27,8 @@
 
 <script>
 /* global chrome */
-import personasData from "@/assets/personas.json";
-import personaDetail from "@/components/personaDetail.vue";
+import personasData from "/src/assets/personas.json";
+import personaDetail from "/src/components/personaDetail.vue";
 export default {
   components: {
     personaDetail,
