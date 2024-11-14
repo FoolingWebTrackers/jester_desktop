@@ -10,7 +10,7 @@
       />
       <div class="persona-info">
         <h3 class="persona-name unselectable">{{ persona.name }}</h3>
-        <p class="persona-desc unselectable">{{ persona.description }}</p>
+        <p v-if="showDescription" class="persona-desc unselectable">{{ persona.description }}</p>
       </div>
       <button class="select-button" @click="selectPersona(persona)">
         Select
@@ -27,9 +27,9 @@
 </template>
 
 <script>
-/* global chrome */
 import personasData from "/src/assets/personas.json";
 import personaDetail from "/src/components/personaDetail.vue";
+
 export default {
   components: {
     personaDetail,
@@ -43,24 +43,34 @@ export default {
         ...persona,
         photo: persona.photo,
       })),
+      windowWidth: window.innerWidth,
     };
+  },
+  computed: {
+    showDescription() {
+      return this.windowWidth >= 900; // Set width threshold for showing description
+    },
   },
   methods: {
     selectPersona(persona) {
-      // Implement logic for selecting a persona
       this.selectedPersona = persona;
-    },
-    closeTabs() {
-      for (const tabId of this.tabIds) {
-        chrome.tabs.remove(tabId);
-      }
     },
     setDefaultPhoto(persona) {
       persona.photo = "profilePhotos/default.webp";
     },
+    updateWindowWidth() {
+      this.windowWidth = window.innerWidth;
+    },
+  },
+  mounted() {
+    window.addEventListener("resize", this.updateWindowWidth);
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.updateWindowWidth);
   },
 };
 </script>
+
 
 <style scoped>
 .v-move,
@@ -121,7 +131,7 @@ input {
   height: 90vh;
   flex-wrap: wrap; /* Allows wrapping to new rows */
   justify-content: center;
-  gap: 10px; /* Adjusts spacing between items */
+  gap: 30px; /* Adjusts spacing between items */
   align-items: center;
   margin-top: 20px;
   width: 100%;
@@ -143,15 +153,15 @@ input {
   transition: transform 0.2s;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 800px) {
   .persona-box {
-    width: calc(25% - 10px); 
+    width: calc(20% - 10px); 
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1000px) {
   .persona-box {
-    width: calc(20% - 10px); /* 4 per row for even larger screens */
+    width: calc(10% - 10px); /* 4 per row for even larger screens */
   }
 }
 /* Custom scrollbar styling */
