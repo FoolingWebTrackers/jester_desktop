@@ -10,6 +10,7 @@
       />
       <div class="persona-info">
         <h3 class="persona-name unselectable">{{ persona.name }}</h3>
+        <p v-if="showDescription" class="persona-desc unselectable">{{ persona.description }}</p>
       </div>
       <button class="select-button" @click="selectPersona(persona)">
         Select
@@ -26,9 +27,9 @@
 </template>
 
 <script>
-/* global chrome */
 import personasData from "/src/assets/personas.json";
 import personaDetail from "/src/components/personaDetail.vue";
+
 export default {
   components: {
     personaDetail,
@@ -42,24 +43,34 @@ export default {
         ...persona,
         photo: persona.photo,
       })),
+      windowWidth: window.innerWidth,
     };
+  },
+  computed: {
+    showDescription() {
+      return this.windowWidth >= 900; // Set width threshold for showing description
+    },
   },
   methods: {
     selectPersona(persona) {
-      // Implement logic for selecting a persona
       this.selectedPersona = persona;
-    },
-    closeTabs() {
-      for (const tabId of this.tabIds) {
-        chrome.tabs.remove(tabId);
-      }
     },
     setDefaultPhoto(persona) {
       persona.photo = "profilePhotos/default.webp";
     },
+    updateWindowWidth() {
+      this.windowWidth = window.innerWidth;
+    },
+  },
+  mounted() {
+    window.addEventListener("resize", this.updateWindowWidth);
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.updateWindowWidth);
   },
 };
 </script>
+
 
 <style scoped>
 .v-move,
@@ -117,67 +128,91 @@ input {
 }
 .persona-container {
   display: flex;
-  flex-direction: column;
+  height: 90vh;
+  flex-wrap: wrap; /* Allows wrapping to new rows */
+  justify-content: center;
+  gap: 30px; /* Adjusts spacing between items */
   align-items: center;
   margin-top: 20px;
   width: 100%;
-  max-height: 397px; /* Adjust the height to fit within main container */
   overflow-y: auto;
   overflow-x: hidden;
 }
 
+.persona-box {
+  background: linear-gradient(145deg, rgba(35, 37, 42, 0.7), rgba(40, 43, 48, 0.5));
+  height: 30vh;
+  border-radius: 20px;
+  padding: 1.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+  transition: transform 0.2s;
+}
+
+@media (min-width: 800px) {
+  .persona-box {
+    width: calc(20% - 10px); 
+  }
+}
+
+@media (min-width: 1000px) {
+  .persona-box {
+    width: calc(10% - 10px); /* 4 per row for even larger screens */
+  }
+}
 /* Custom scrollbar styling */
 .persona-container::-webkit-scrollbar {
   width: 8px;
 }
 
 .persona-container::-webkit-scrollbar-track {
-  background: #2e2e2e;
+  background: transparent;
+  box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);
   border-radius: 10px;
 }
 
 .persona-container::-webkit-scrollbar-thumb {
-  background-color: #4a0000;
+  background-color: #ab162b ;
   border-radius: 10px;
-  border: 2px solid #2e2e2e;
-}
-
-.persona-box {
-  height: fit-content;
-  display: flex;
-  align-items: center;
-  background-color: #2e2e2e;
-  border: 1px solid #383636;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 2px;
-  width: 90%;
-  min-height: 63px;
+  border: transparent;
 }
 
 .persona-photo {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   margin-right: 10px;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5) ;
+
 }
 
 .persona-info {
+  width: 100%;
   flex: 1;
 }
 
 .persona-name {
-  font-size: 16px;
+  font-size: 1.5em;
   color: #d1d1d1;
+}
+.persona-desc{
+  color: #d1d1d1;
+  height: 2vh;
+    
 }
 
 .select-button {
-  background-color: #4a0000;
+  background-color: #ab162b;
   color: white;
   border: none;
   border-radius: 5px;
   padding: 5px 10px;
   cursor: pointer;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5) ;
 }
 .fa-solid {
   font-size: 20px;
