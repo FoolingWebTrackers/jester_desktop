@@ -19,12 +19,28 @@
     >
       <nav>
         <ul>
-          <!-- Persona List item with icon and animated label -->
           <li @click="setActiveComponent('personaList')">
+            <img src="../jester-white.svg" class="jester-logo">
+            <Transition name="slide" mode="out-in">
+              <template v-if="isSidebarExtended">
+                <span class="label"> Hub</span>
+              </template>
+            </Transition>
+          </li>
+          <!-- Persona List item with icon and animated label -->
+          <li @click="setActiveComponent('createPersona')">
             <i class="fa-solid fa-plus"></i>
             <Transition name="slide" mode="out-in">
               <template v-if="isSidebarExtended">
-                <span class="label">PersonaList</span>
+                <span class="label"> Create Persona </span>
+              </template>
+            </Transition>
+          </li>
+          <li @click="setActiveComponent('fakeMic')">
+            <i class="fa-solid fa-microphone"></i>
+            <Transition name="slide" mode="out-in">
+              <template v-if="isSidebarExtended">
+                <span class="label"> Fake Mic</span>
               </template>
             </Transition>
           </li>
@@ -34,17 +50,17 @@
             <i class="fa-solid fa-user"></i>
             <Transition name="slide">
               <template v-if="isSidebarExtended">
-                <span class="label">App Profile</span>
+                <span class="label">Profile</span>
               </template>
             </Transition>
           </li>
 
           <!-- App Settings item with icon and animated label -->
           <li @click="setActiveComponent('appSettings')">
-            <i class="fa-solid fa-cogs"></i>
+            <i class="fa-solid fa-gear"></i>
             <Transition name="slide">
               <template v-if="isSidebarExtended">
-                <span class="label">App Settings</span>
+                <span class="label">Settings</span>
               </template>
             </Transition>
           </li>
@@ -63,6 +79,8 @@
 import personaList from "/src/components/personaList.vue";
 import appProfile from "/src/components/appProfile.vue";
 import appSettings from "/src/components/appSettings.vue";
+import fakeMic from "/src/components/fakeMic.vue";
+import createPersona from "/src/components/createPersona.vue";
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import "@fortawesome/fontawesome-free/css/all.css";
 
@@ -78,6 +96,8 @@ export default {
     personaList,
     appProfile,
     appSettings,
+    fakeMic,
+    createPersona
   },
   methods: {
     extendSidebar() {
@@ -115,6 +135,10 @@ export default {
   );
   backdrop-filter: blur(50px);
 }
+.jester-logo{
+  width: 30px;
+  height: 30px;
+}
 
 /* Sidebar */
 .sidebar {
@@ -150,7 +174,7 @@ export default {
 }
 
 .fa-solid {
-  font-size: 20px;
+  font-size: 30px;
 }
 
 .sidebar nav ul li:hover {
@@ -163,8 +187,8 @@ export default {
   opacity: 0;
   transform: translateX(-20px);
   transition: opacity 0.3s ease, transform 0.3s ease;
-  margin-left: 10px;
   text-wrap: nowrap;
+  margin-left: 10px;
 }
 
 /* When sidebar is extended, label slides in */
@@ -187,11 +211,17 @@ export default {
 .slide-enter-active,
 .slide-leave-active {
   transition: opacity 0.3s ease, transform 0.3s ease;
+  width: fit-content;
+  color: white;
+  margin-left: 10px;
 }
 
 .slide-enter, .slide-leave-to /* .slide-leave-active in <2.1.8 */ {
   opacity: 0;
   transform: translateX(-20px);
+  width: 0;
+  color: transparent;
+  margin-left: 0px;
 }
 </style>
 
@@ -216,9 +246,10 @@ export default {
   -webkit-user-select: none;
 }
 .titlebar-button:hover {
-  background: rgba(87, 39, 39, 0.1);
+  background: rgba(87, 39, 39, 0.5);
 }
 .titlebar .fa-solid{
   color: #d1d1d1;
+  font-size: 20px;
 }
 </style>
