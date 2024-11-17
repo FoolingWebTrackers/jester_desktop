@@ -11,8 +11,11 @@
         <i class="fa-solid fa-xmark"></i>      
       </div>
     </div>
+    <loginPage v-if="!loggedIn" @login="loggedIn = true"/>
+
+    
     <!-- Sidebar -->
-    <aside
+    <aside v-if="loggedIn"
       :class="['sidebar', { 'sidebar--extended': isSidebarExtended }]"
       @mouseover="extendSidebar"
       @mouseleave="collapseSidebar"
@@ -69,7 +72,7 @@
     </aside>
 
     <!-- Main Content Area -->
-    <main class="main-content">
+    <main class="main-content" v-if="loggedIn">
       <component :is="activeComponent" />
     </main>
   </div>
@@ -81,6 +84,7 @@ import appProfile from "/src/components/appProfile.vue";
 import appSettings from "/src/components/appSettings.vue";
 import fakeMic from "/src/components/fakeMic.vue";
 import createPersona from "/src/components/createPersona.vue";
+import loginPage from "./components/loginPage.vue";
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import "@fortawesome/fontawesome-free/css/all.css";
 
@@ -88,6 +92,7 @@ export default {
   data() {
     return {
       isSidebarExtended: false,
+      loggedIn: false,
       activeComponent: "personaList", // Default component
       window: getCurrentWindow()
     };
@@ -97,7 +102,8 @@ export default {
     appProfile,
     appSettings,
     fakeMic,
-    createPersona
+    createPersona,
+    loginPage
   },
   methods: {
     extendSidebar() {
