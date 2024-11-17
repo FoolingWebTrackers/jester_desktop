@@ -155,13 +155,13 @@ input {
 
 @media (min-width: 800px) {
   .persona-box {
-    width: calc(20% - 10px); 
+    width: calc(25% - 10px); 
   }
 }
 
 @media (min-width: 1000px) {
   .persona-box {
-    width: calc(10% - 10px); /* 4 per row for even larger screens */
+    width: calc(15% - 10px); /* 4 per row for even larger screens */
   }
 }
 /* Custom scrollbar styling */
@@ -235,5 +235,13 @@ body {
   width: 300px;
   height: 600px;
   background: transparent;
+}
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 </style>
