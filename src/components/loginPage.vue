@@ -10,12 +10,7 @@
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input
-              :type="showPassword ? 'text' : 'password'"
-              id="password"
-              v-model="loginPassword"
-              required
-            />
+            <input :type="showPassword ? 'text' : 'password'" id="password" v-model="loginPassword" required />
           </div>
           <div class="checkbox-container">
             <input type="checkbox" id="show-password" v-model="showPassword" />
@@ -34,30 +29,16 @@
         <form @submit.prevent="handleCreateUser">
           <div class="form-group">
             <label for="new-username">Username</label>
-            <input
-              type="text"
-              id="new-username"
-              v-model="newUsername"
-              required
-            />
+            <input type="text" id="new-username" v-model="newUsername" required />
           </div>
           <div class="form-group">
             <label for="new-password">Password</label>
-            <input
-              :type="showPassword ? 'text' : 'password'"
-              id="new-password"
-              v-model="newPassword"
-              required
-            />
+            <input :type="showPassword ? 'text' : 'password'" id="new-password" v-model="newPassword" required />
           </div>
           <div class="form-group">
             <label for="confirm-password">Re-enter Password</label>
-            <input
-              :type="showPassword ? 'text' : 'password'"
-              id="confirm-password"
-              v-model="confirmPassword"
-              required
-            />
+            <input :type="showPassword ? 'text' : 'password'" id="confirm-password" v-model="confirmPassword"
+              required />
           </div>
           <div class="checkbox-container">
             <input type="checkbox" id="show-password" v-model="showPassword" />
@@ -121,24 +102,50 @@ export default {
   align-items: center;
   height: 100vh;
   width: 100%;
-  background: radial-gradient(
-    circle at top left,
-    rgba(43, 47, 54, 0.95),
-    rgba(27, 30, 35, 0.9) 70%,
-    rgba(17, 20, 23, 1) 100%
-  );
+  background:
+    radial-gradient(circle at top left,
+      rgb(83, 91, 105),
+      rgba(27, 30, 35, 0.7) 70%,
+      rgba(17, 20, 23, 0) 100%),
+    linear-gradient(130deg,
+      rgba(60, 64, 71, 0.5) 30%,
+      transparent 30%),
+    linear-gradient(60deg,
+      rgba(50, 54, 61, 0.4) 30%,
+      transparent 30%),
+    linear-gradient(200deg,
+      rgba(37, 41, 47, 0.5) 30%,
+      transparent 30%),
+    linear-gradient(320deg,
+      rgba(33, 37, 43, 0.4) 30%,
+      transparent 30%),
+    linear-gradient(140deg,
+      rgba(45, 50, 58, 0.3) 40%,
+      transparent 40%),
+    linear-gradient(310deg,
+      rgba(25, 29, 33, 0.3) 40%,
+      transparent 40%),
+    linear-gradient(240deg,
+      rgba(40, 45, 52, 0.35) 50%,
+      transparent 50%);
+  background-size: cover;
+  background-blend-mode: overlay;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .form-container {
-  background: rgba(35, 37, 42, 0.6); /* Semi-transparent background */
-  backdrop-filter: blur(10px); /* Adds the frosted glass blur effect */
+  background: rgba(35, 37, 42, 0.5);
+  /* Semi-transparent background */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px) saturate(100%); /* WebKit fallback for Safari */
+  /* Adds the frosted glass blur effect */
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   width: 100%;
   max-width: 400px;
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for glass effect */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* Light border for glass effect */
 }
 
 h2 {
@@ -160,7 +167,8 @@ h2 {
 .form-group input {
   width: 100%;
   padding: 0.5rem;
-  background-color: rgba(42, 44, 49, 0.8); /* More transparent input background */
+  background-color: rgba(42, 44, 49, 0.8);
+  /* More transparent input background */
   border: 1px solid #444;
   border-radius: 4px;
   color: #fff;
