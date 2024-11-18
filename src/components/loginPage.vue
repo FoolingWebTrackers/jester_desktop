@@ -134,7 +134,7 @@ export default {
 }
 
 .form-container {
-  background: rgba(35, 37, 42, 0.5);
+  background: linear-gradient(145deg, rgba(35, 37, 42, 0.7), rgba(40, 43, 48, 0.5));
   /* Semi-transparent background */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px) saturate(100%); /* WebKit fallback for Safari */

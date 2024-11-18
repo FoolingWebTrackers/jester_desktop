@@ -150,6 +150,7 @@ input {
   text-align: center;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px) saturate(100%); /* WebKit fallback for Safari */
   transition: transform 0.2s;
 }
 

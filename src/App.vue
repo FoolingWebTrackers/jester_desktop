@@ -8,17 +8,14 @@
         <i class="fa-regular fa-expand"></i>
       </div>
       <div class="titlebar-button" id="titlebar-close" @click="closeWindow">
-        <i class="fa-solid fa-xmark"></i>      
+        <i class="fa-solid fa-xmark"></i>
       </div>
     </div>
-    <loginPage v-if="!loggedIn" @login="loggedIn = true"/>
+    <loginPage v-if="!loggedIn" @login="loggedIn = true" />
 
     <!-- Sidebar -->
-    <aside v-if="loggedIn"
-      :class="['sidebar', { 'sidebar--extended': isSidebarExtended }]"
-      @mouseover="extendSidebar"
-      @mouseleave="collapseSidebar"
-    >
+    <aside v-if="loggedIn" :class="['sidebar', { 'sidebar--extended': isSidebarExtended }]" @mouseover="extendSidebar"
+      @mouseleave="collapseSidebar">
       <nav>
         <ul>
           <li @click="setActiveComponent('personaList')" :class="{ active: activeComponent === 'personaList' }">
@@ -132,15 +129,43 @@ export default {
   display: flex;
   min-height: 100vh;
   min-width: 100vw;
-  background: radial-gradient(
-    circle at top left,
-    rgba(43, 47, 54, 0.95),
-    rgba(27, 30, 35, 0.9) 70%,
-    rgba(17, 20, 23, 1) 100%
-  );
-  backdrop-filter: blur(50px);
+  background:
+    /* Overarching Gradient */
+    radial-gradient(circle at bottom right,
+      rgb(75, 80, 90),
+      rgba(30, 34, 40, 0.7) 70%,
+      rgba(20, 23, 28, 0) 100%),
+    /* Polygonal and Diagonal Shapes */
+    linear-gradient(150deg,
+      rgba(65, 70, 78, 0.5) 30%,
+      transparent 30%),
+    linear-gradient(40deg,
+      rgba(55, 60, 67, 0.4) 30%,
+      transparent 30%),
+    linear-gradient(210deg,
+      rgba(42, 46, 52, 0.5) 30%,
+      transparent 30%),
+    linear-gradient(330deg,
+      rgba(35, 40, 45, 0.4) 30%,
+      transparent 30%),
+    /* Additional Angular Shapes for More Variation */
+    linear-gradient(120deg,
+      rgba(48, 53, 60, 0.3) 40%,
+      transparent 40%),
+    linear-gradient(290deg,
+      rgba(28, 33, 37, 0.3) 40%,
+      transparent 40%),
+    linear-gradient(260deg,
+      rgba(38, 43, 48, 0.35) 50%,
+      transparent 50%);
+  background-size: cover;
+  background-blend-mode: overlay;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px) saturate(100%);
+  /* WebKit fallback for Safari */
 }
-.jester-logo{
+
+.jester-logo {
   width: 30px;
   height: 30px;
 }
@@ -153,8 +178,10 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(50px);
+  background: linear-gradient(145deg, rgba(35, 37, 42, 0.7), rgba(40, 43, 48, 0.5));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px) saturate(100%);
+  /* WebKit fallback for Safari */
   border-right: 1px solid rgba(255, 255, 255, 0.5);
   overflow: hidden;
   position: fixed;
@@ -229,11 +256,13 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 60px; /* Adjusted for fixed sidebar */
+  margin-left: 60px;
+  /* Adjusted for fixed sidebar */
 }
 
-.sidebar--extended ~ .main-content {
-  margin-left: 200px; /* Adjust when sidebar is extended */
+.sidebar--extended~.main-content {
+  margin-left: 200px;
+  /* Adjust when sidebar is extended */
 }
 
 /* Slide Transition */
@@ -245,7 +274,11 @@ export default {
   margin-left: 10px;
 }
 
-.slide-enter, .slide-leave-to /* .slide-leave-active in <2.1.8 */ {
+.slide-enter,
+.slide-leave-to
+
+/* .slide-leave-active in <2.1.8 */
+  {
   opacity: 0;
   transform: translateX(-20px);
   width: 0;
@@ -265,6 +298,7 @@ export default {
   left: 0;
   right: 0;
 }
+
 .titlebar-button {
   display: inline-flex;
   justify-content: center;
@@ -274,16 +308,18 @@ export default {
   user-select: none;
   -webkit-user-select: none;
 }
+
 .titlebar-button:hover {
   background: rgba(87, 39, 39, 0.5);
 }
-.titlebar .fa-solid{
+
+.titlebar .fa-solid {
   color: #d1d1d1;
   font-size: 20px;
 }
-.titlebar .fa-regular{
+
+.titlebar .fa-regular {
   color: #d1d1d1;
   font-size: 16px;
 }
-
 </style>
