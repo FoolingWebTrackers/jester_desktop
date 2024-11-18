@@ -2,20 +2,24 @@
   <div class="login-page">
     <div class="form-container">
       <div v-if="showLoginForm">
-        <h2 class="unselectable">Login</h2>
+        <h2>Login</h2>
         <form @submit.prevent="handleLogin">
-          <div>
+          <div class="form-group">
             <label for="username">Username</label>
             <input type="text" id="username" v-model="loginUsername" required />
           </div>
-          <div>
-            <label for="password">Password </label>
+          <div class="form-group">
+            <label for="password">Password</label>
             <input
               :type="showPassword ? 'text' : 'password'"
               id="password"
               v-model="loginPassword"
               required
             />
+          </div>
+          <div class="checkbox-container">
+            <input type="checkbox" id="show-password" v-model="showPassword" />
+            <label for="show-password">Show Password</label>
           </div>
           <button type="submit">Login</button>
         </form>
@@ -28,7 +32,7 @@
       <div v-else>
         <h2>Create Account</h2>
         <form @submit.prevent="handleCreateUser">
-          <div>
+          <div class="form-group">
             <label for="new-username">Username</label>
             <input
               type="text"
@@ -37,7 +41,7 @@
               required
             />
           </div>
-          <div>
+          <div class="form-group">
             <label for="new-password">Password</label>
             <input
               :type="showPassword ? 'text' : 'password'"
@@ -46,7 +50,7 @@
               required
             />
           </div>
-          <div>
+          <div class="form-group">
             <label for="confirm-password">Re-enter Password</label>
             <input
               :type="showPassword ? 'text' : 'password'"
@@ -54,6 +58,10 @@
               v-model="confirmPassword"
               required
             />
+          </div>
+          <div class="checkbox-container">
+            <input type="checkbox" id="show-password" v-model="showPassword" />
+            <label for="show-password">Show Password</label>
           </div>
           <button type="submit">Create Account</button>
         </form>
@@ -113,100 +121,100 @@ export default {
   align-items: center;
   height: 100vh;
   width: 100%;
+  background: radial-gradient(
+    circle at top left,
+    rgba(43, 47, 54, 0.95),
+    rgba(27, 30, 35, 0.9) 70%,
+    rgba(17, 20, 23, 1) 100%
+  );
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .form-container {
-  background: linear-gradient(
-    145deg,
-    rgba(35, 37, 42, 0.7),
-    rgba(40, 43, 48, 0.5)
-  );
+  background: rgba(35, 37, 42, 0.6); /* Semi-transparent background */
+  backdrop-filter: blur(10px); /* Adds the frosted glass blur effect */
   padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(12px);
-  width: fit-content;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Light border for glass effect */
 }
 
-form {
-  display: flex;
-  flex-direction: column;
+h2 {
+  color: #f1f1f1;
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
-form > div {
+.form-group {
   margin-bottom: 1rem;
 }
-h2 {
-  color: #d1d1d1;
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #f1f1f1;
 }
-label {
-  color: #d1d1d1;
+
+.form-group input {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: rgba(42, 44, 49, 0.8); /* More transparent input background */
+  border: 1px solid #444;
+  border-radius: 4px;
+  color: #fff;
+  box-sizing: border-box;
 }
-p {
-  color: #d1d1d1;
-}
-a {
-  color: #ff0000;
+
+.form-group input:focus {
+  outline: none;
+  border-color: #ff0000;
 }
 
 .checkbox-container {
   display: flex;
   align-items: center;
-  justify-content: left;
-}
-input[type="checkbox"] {
-  display: flex;
-  appearance: none;
-  width: 30px;
-  height: 30px;
-  border: 2px solid #383636;
-  border-radius: 4px;
-  background-color: transparent;
-  transition: background-color 0.5s ease, border-color 0.5s ease;
-  cursor: pointer;
-}
-input[type="checkbox"]:checked {
-  background-color: #4a0000;
-  border-color: #ff0000;
-}
-input[type="checkbox"]:checked + label {
-  color: #ff0000;
-  -webkit-transition: color 0.2s ease-out;
-  -moz-transition: color 0.2s ease-out;
-  -o-transition: color 0.2s ease-out;
-  -ms-transition: color 0.2s ease-out;
-  transition: color 0.2s ease-out;
-}
-input[type="checkbox"]::after {
-  content: "";
-  position: relative;
-  top: 1px;
-  left: 9px;
-  width: 7px;
-  height: 18px;
-  border-right: 2px solid #fff;
-  border-bottom: 2px solid #fff;
-  transform: scale(0) rotate(178deg);
-  transition: transform 0.2s ease-in-out;
-  opacity: 0;
+  margin-bottom: 1rem;
 }
 
-input[type="checkbox"]:checked::after {
-  transform: scale(1) rotate(45deg);
-  opacity: 1;
+.checkbox-container input[type="checkbox"] {
+  margin-right: 0.5rem;
+  width: 20px;
+  height: 20px;
+}
+
+.checkbox-container label {
+  color: #f1f1f1;
 }
 
 button {
   margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  background: #007bff;
+  padding: 0.75rem;
+  background: #ff0000;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
 }
 
 button:hover {
-  background: #0056b3;
+  background: #e60000;
+}
+
+p {
+  color: #f1f1f1;
+  text-align: center;
+}
+
+p a {
+  color: #ff0000;
+  text-decoration: none;
+}
+
+p a:hover {
+  text-decoration: underline;
 }
 </style>
