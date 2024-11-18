@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <!-- Titlebar -->
     <div data-tauri-drag-region class="titlebar">
       <div class="titlebar-button" id="titlebar-minimize" @click="minimizeWindow">
         <i class="fa-solid fa-window-minimize"></i>
@@ -11,66 +12,48 @@
         <i class="fa-solid fa-xmark"></i>
       </div>
     </div>
+
+    <!-- Login Page -->
     <loginPage v-if="!loggedIn" @login="loggedIn = true" />
 
-    <!-- Sidebar -->
-    <aside v-if="loggedIn" :class="['sidebar', { 'sidebar--extended': isSidebarExtended }]" @mouseover="extendSidebar"
-      @mouseleave="collapseSidebar">
-      <nav>
-        <ul>
-          <li @click="setActiveComponent('personaList')" :class="{ active: activeComponent === 'personaList' }">
-            <img src="../jester-white.svg" class="jester-logo">
-            <Transition name="slide" mode="out-in">
-              <template v-if="isSidebarExtended">
-                <span class="label">Hub</span>
-              </template>
-            </Transition>
-          </li>
-          <!-- Persona List item with icon and animated label -->
-          <li @click="setActiveComponent('createPersona')" :class="{ active: activeComponent === 'createPersona' }">
-            <i class="fa-solid fa-plus"></i>
-            <Transition name="slide" mode="out-in">
-              <template v-if="isSidebarExtended">
-                <span class="label">Create Persona</span>
-              </template>
-            </Transition>
-          </li>
-          <li @click="setActiveComponent('fakeMic')" :class="{ active: activeComponent === 'fakeMic' }">
-            <i class="fa-solid fa-microphone"></i>
-            <Transition name="slide" mode="out-in">
-              <template v-if="isSidebarExtended">
-                <span class="label">Fake Mic</span>
-              </template>
-            </Transition>
-          </li>
+    <!-- Main Content -->
+    <div v-if="loggedIn">
+      <!-- Sidebar -->
+      <aside :class="['sidebar', { 'sidebar--extended': isSidebarExtended }]" @mouseover="extendSidebar"
+        @mouseleave="collapseSidebar">
+        <nav>
+          <ul class="sidebar-top">
+            <li @click="setActiveComponent('personaList')" :class="{ active: activeComponent === 'personaList' }">
+              <img src="../jester-white.svg" class="jester-logo">
+              <span class="label" :class="{ 'label--visible': isSidebarExtended }">Hub</span>
+            </li>
+            <li @click="setActiveComponent('createPersona')" :class="{ active: activeComponent === 'createPersona' }">
+              <i class="fa-solid fa-plus"></i>
+              <span class="label" :class="{ 'label--visible': isSidebarExtended }">Create Persona</span>
+            </li>
+            <li @click="setActiveComponent('fakeMic')" :class="{ active: activeComponent === 'fakeMic' }">
+              <i class="fa-solid fa-microphone"></i>
+              <span class="label" :class="{ 'label--visible': isSidebarExtended }">Fake Mic</span>
+            </li>
+            <li @click="setActiveComponent('appProfile')" :class="{ active: activeComponent === 'appProfile' }">
+              <i class="fa-solid fa-user"></i>
+              <span class="label" :class="{ 'label--visible': isSidebarExtended }">Profile</span>
+            </li>
+          </ul>
+          <ul class="sidebar-bottom">
+            <li @click="setActiveComponent('appSettings')" :class="{ active: activeComponent === 'appSettings' }">
+              <i class="fa-solid fa-gear"></i>
+              <span class="label" :class="{ 'label--visible': isSidebarExtended }">Settings</span>
+            </li>
+          </ul>
+        </nav>
+      </aside>
 
-          <!-- App Profile item with icon and animated label -->
-          <li @click="setActiveComponent('appProfile')" :class="{ active: activeComponent === 'appProfile' }">
-            <i class="fa-solid fa-user"></i>
-            <Transition name="slide">
-              <template v-if="isSidebarExtended">
-                <span class="label">Profile</span>
-              </template>
-            </Transition>
-          </li>
-
-          <!-- App Settings item with icon and animated label -->
-          <li @click="setActiveComponent('appSettings')" :class="{ active: activeComponent === 'appSettings' }">
-            <i class="fa-solid fa-gear"></i>
-            <Transition name="slide">
-              <template v-if="isSidebarExtended">
-                <span class="label">Settings</span>
-              </template>
-            </Transition>
-          </li>
-        </ul>
-      </nav>
-    </aside>
-
-    <!-- Main Content Area -->
-    <main class="main-content" v-if="loggedIn">
-      <component :is="activeComponent" />
-    </main>
+      <!-- Main Content Area -->
+      <main class="main-content">
+        <component :is="activeComponent" />
+      </main>
+    </div>
   </div>
 </template>
 
@@ -125,6 +108,7 @@ export default {
 </script>
 
 <style scoped>
+/* App Container */
 .app-container {
   display: flex;
   min-height: 100vh;
@@ -165,6 +149,7 @@ export default {
   /* WebKit fallback for Safari */
 }
 
+/* Jester Logo */
 .jester-logo {
   width: 30px;
   height: 30px;
@@ -177,7 +162,6 @@ export default {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   background: linear-gradient(145deg, rgba(35, 37, 42, 0.7), rgba(40, 43, 48, 0.5));
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px) saturate(100%);
@@ -195,11 +179,28 @@ export default {
 }
 
 /* Sidebar Navigation */
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .sidebar nav ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
+.sidebar-top {
+  flex-grow: 1;
+}
+
+.sidebar-bottom {
+  /* Align to bottom */
+  margin-bottom: 20px;
+}
+
+/* Sidebar Items */
 .sidebar nav ul li {
   padding: 15px;
   cursor: pointer;
@@ -232,8 +233,8 @@ export default {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Label Slide Animation */
-.sidebar .label {
+/* Labels */
+.label {
   display: inline-block;
   opacity: 0;
   transform: translateX(-20px);
@@ -242,8 +243,7 @@ export default {
   margin-left: 10px;
 }
 
-/* When sidebar is extended, label slides in */
-.sidebar--extended .label {
+.label--visible {
   opacity: 1;
   transform: translateX(0);
 }
@@ -264,30 +264,10 @@ export default {
   margin-left: 200px;
   /* Adjust when sidebar is extended */
 }
-
-/* Slide Transition */
-.slide-enter-active,
-.slide-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  width: fit-content;
-  color: white;
-  margin-left: 10px;
-}
-
-.slide-enter,
-.slide-leave-to
-
-/* .slide-leave-active in <2.1.8 */
-  {
-  opacity: 0;
-  transform: translateX(-20px);
-  width: 0;
-  color: transparent;
-  margin-left: 0px;
-}
 </style>
 
 <style>
+/* Titlebar */
 .titlebar {
   height: 30px;
   user-select: none;
