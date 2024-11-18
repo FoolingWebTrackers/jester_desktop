@@ -258,6 +258,7 @@ export default {
   align-items: center;
   margin-left: 60px;
   /* Adjusted for fixed sidebar */
+  transition: margin-left 0.3s ease; /* Smooth transition */
 }
 
 .sidebar--extended~.main-content {
