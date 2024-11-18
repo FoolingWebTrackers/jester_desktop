@@ -13,7 +13,6 @@
     </div>
     <loginPage v-if="!loggedIn" @login="loggedIn = true"/>
 
-    
     <!-- Sidebar -->
     <aside v-if="loggedIn"
       :class="['sidebar', { 'sidebar--extended': isSidebarExtended }]"
@@ -22,34 +21,34 @@
     >
       <nav>
         <ul>
-          <li @click="setActiveComponent('personaList')">
+          <li @click="setActiveComponent('personaList')" :class="{ active: activeComponent === 'personaList' }">
             <img src="../jester-white.svg" class="jester-logo">
             <Transition name="slide" mode="out-in">
               <template v-if="isSidebarExtended">
-                <span class="label"> Hub</span>
+                <span class="label">Hub</span>
               </template>
             </Transition>
           </li>
           <!-- Persona List item with icon and animated label -->
-          <li @click="setActiveComponent('createPersona')">
+          <li @click="setActiveComponent('createPersona')" :class="{ active: activeComponent === 'createPersona' }">
             <i class="fa-solid fa-plus"></i>
             <Transition name="slide" mode="out-in">
               <template v-if="isSidebarExtended">
-                <span class="label"> Create Persona </span>
+                <span class="label">Create Persona</span>
               </template>
             </Transition>
           </li>
-          <li @click="setActiveComponent('fakeMic')">
+          <li @click="setActiveComponent('fakeMic')" :class="{ active: activeComponent === 'fakeMic' }">
             <i class="fa-solid fa-microphone"></i>
             <Transition name="slide" mode="out-in">
               <template v-if="isSidebarExtended">
-                <span class="label"> Fake Mic</span>
+                <span class="label">Fake Mic</span>
               </template>
             </Transition>
           </li>
 
           <!-- App Profile item with icon and animated label -->
-          <li @click="setActiveComponent('appProfile')">
+          <li @click="setActiveComponent('appProfile')" :class="{ active: activeComponent === 'appProfile' }">
             <i class="fa-solid fa-user"></i>
             <Transition name="slide">
               <template v-if="isSidebarExtended">
@@ -59,7 +58,7 @@
           </li>
 
           <!-- App Settings item with icon and animated label -->
-          <li @click="setActiveComponent('appSettings')">
+          <li @click="setActiveComponent('appSettings')" :class="{ active: activeComponent === 'appSettings' }">
             <i class="fa-solid fa-gear"></i>
             <Transition name="slide">
               <template v-if="isSidebarExtended">
@@ -158,6 +157,10 @@ export default {
   backdrop-filter: blur(50px);
   border-right: 1px solid rgba(255, 255, 255, 0.5);
   overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
 .sidebar--extended {
@@ -177,6 +180,7 @@ export default {
   transition: background 0.3s ease;
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .fa-solid {
@@ -187,13 +191,27 @@ export default {
   background: rgba(255, 255, 255, 0.1);
 }
 
+.sidebar nav ul li.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #ff3b3b;
+}
+
+.sidebar nav ul li.active {
+  background: rgba(255, 255, 255, 0.1);
+}
+
 /* Label Slide Animation */
 .sidebar .label {
   display: inline-block;
   opacity: 0;
   transform: translateX(-20px);
   transition: opacity 0.3s ease, transform 0.3s ease;
-  text-wrap: nowrap;
+  white-space: nowrap;
   margin-left: 10px;
 }
 
@@ -211,6 +229,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 60px; /* Adjusted for fixed sidebar */
+}
+
+.sidebar--extended ~ .main-content {
+  margin-left: 200px; /* Adjust when sidebar is extended */
 }
 
 /* Slide Transition */
