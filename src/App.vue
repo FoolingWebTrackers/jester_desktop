@@ -5,7 +5,7 @@
         <i class="fa-solid fa-window-minimize"></i>
       </div>
       <div class="titlebar-button" id="titlebar-maximize" @click="maximizeWindow">
-        <i class="fa-solid fa-window-maximize"></i>
+        <i class="fa-regular fa-expand"></i>
       </div>
       <div class="titlebar-button" id="titlebar-close" @click="closeWindow">
         <i class="fa-solid fa-xmark"></i>      
@@ -281,4 +281,9 @@ export default {
   color: #d1d1d1;
   font-size: 20px;
 }
+.titlebar .fa-regular{
+  color: #d1d1d1;
+  font-size: 16px;
+}
+
 </style>
