@@ -24,7 +24,7 @@
         <nav>
           <ul class="sidebar-top">
             <li @click="setActiveComponent('personaList')" :class="{ active: activeComponent === 'personaList' }">
-              <img src="../jester-white.svg" class="jester-logo">
+              <img src="/jester-white.svg" class="jester-logo">
               <span class="label" :class="{ 'label--visible': isSidebarExtended }">Hub</span>
             </li>
             <li @click="setActiveComponent('createPersona')" :class="{ active: activeComponent === 'createPersona' }">
