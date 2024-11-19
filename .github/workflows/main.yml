@@ -5,9 +5,6 @@ on:
     branches:
       - main
 
-# This is the example from the readme.
-# On each push to the `release` branch it will create or update a GitHub release, build your app, and upload the artifacts to the release.
-
 jobs:
   publish-tauri:
     permissions:
@@ -16,11 +13,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: "macos-latest" # for Arm based macs (M1 and above).
+          - platform: "macos-latest"
             args: "--target aarch64-apple-darwin"
-          # - platform: "macos-latest" # for Intel based macs.
+          # - platform: "macos-latest"
           #   args: "--target x86_64-apple-darwin"
-          # - platform: "ubuntu-22.04" # for Tauri v1 you could replace this with ubuntu-20.04.
+          # - platform: "ubuntu-22.04"
           #   args: ""
           # - platform: "windows-latest"
           #   args: ""
@@ -37,37 +34,56 @@ jobs:
       - name: setup Deno
         uses: denoland/setup-deno@v1
         with:
-          deno-version: latest # Deno version
+          deno-version: latest
 
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
-          # Those targets are only used on macos runners so it's in an `if` to slightly speed up windows and linux builds.
           targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
       - name: install dependencies (ubuntu only)
-        if: matrix.platform == 'ubuntu-22.04' # This must match the platform value defined above.
+        if: matrix.platform == 'ubuntu-22.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
-        # webkitgtk 4.0 is for Tauri v1 - webkitgtk 4.1 is for Tauri v2.
-        # You can remove the one that doesn't apply to your app to speed up the workflow a bit.
 
       - name: install frontend dependencies
-        run: yarn install # change this to npm, pnpm or bun depending on which one you use.
+        run: deno install
 
-      - name: Upload build artifacts (for debugging)
-        if: always()
+      - name: build Tauri app
+        run: deno task tauri build
+
+      # Upload the .dmg and .app.tar.gz files as GitHub release assets
+      - name: Upload macOS .dmg artifact (if available)
+        if: matrix.platform == 'macos-latest'
         uses: actions/upload-artifact@v3
         with:
-          name: tauri-build
-          path: src-tauri/target/release/bundle
+          name: jester-desktop-dmg
+          path: |
+            src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg
+            src-tauri/target/x86_64-apple-darwin/release/bundle/dmg/*.dmg
+          
+      - name: Upload macOS .app.tar.gz artifact (if available)
+        if: matrix.platform == 'macos-latest'
+        uses: actions/upload-artifact@v3
+        with:
+          name: jester-desktop-app
+          path: |
+            src-tauri/target/aarch64-apple-darwin/release/bundle/macos/*.tar.gz
+            src-tauri/target/x86_64-apple-darwin/release/bundle/macos/*.tar.gz
 
+      - name: Upload Linux and Windows artifacts
+        if: matrix.platform == 'ubuntu-22.04' || matrix.platform == 'windows-latest'
+        uses: actions/upload-artifact@v3
+        with:
+          name: jester-desktop-binaries
+          path: src-tauri/target/release/bundle/**/*.*
+        
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: app-v__VERSION__ # the action automatically replaces \_\_VERSION\_\_ with the app version.
+          tagName: app-v__VERSION__
           releaseName: "App v__VERSION__"
           releaseBody: "See the assets to download this version and install."
           releaseDraft: true
