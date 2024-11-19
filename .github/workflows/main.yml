@@ -34,6 +34,11 @@ jobs:
         with:
           node-version: lts/*
 
+      - name: setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: latest # Deno version
+
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable
         with:
