@@ -2,14 +2,34 @@
   <div class="app-container">
     <!-- Titlebar -->
     <div data-tauri-drag-region class="titlebar">
-      <div class="titlebar-button" id="titlebar-minimize" @click="minimizeWindow">
-        <i class="fa-solid fa-window-minimize"></i>
+      <div
+        class="titlebar-button"
+        id="titlebar-minimize"
+        @click="minimizeWindow"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 11">
+          <path fill="#fff" d="M11,4.9v1.1H0V4.399h11z" />
+        </svg>
       </div>
-      <div class="titlebar-button" id="titlebar-maximize" @click="maximizeWindow">
-        <i class="fa-regular fa-expand"></i>
+      <div
+        class="titlebar-button"
+        id="titlebar-maximize"
+        @click="maximizeWindow"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 11">
+          <path
+            fill="#fff"
+            d="M0,1.7v7.6C0,10.2,0.8,11,1.7,11h7.6c0.9,0,1.7-0.8,1.7-1.7V1.7C11,0.8,10.2,0,9.3,0H1.7C0.8,0,0,0.8,0,1.7z M8.8,9.9H2.2c-0.6,0-1.1-0.5-1.1-1.1V2.2c0-0.6,0.5-1.1,1.1-1.1h6.7c0.6,0,1.1,0.5,1.1,1.1v6.7C9.9,9.4,9.4,9.9,8.8,9.9z"
+          />
+        </svg>
       </div>
       <div class="titlebar-button" id="titlebar-close" @click="closeWindow">
-        <i class="fa-solid fa-xmark"></i>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 11">
+          <path
+            fill="#fff"
+            d="M6.279 5.5L11 10.221l-.779.779L5.5 6.279.779 11 0 10.221 4.721 5.5 0 .779.779 0 5.5 4.721 10.221 0 11 .779 6.279 5.5z"
+          />
+        </svg>
       </div>
     </div>
 
@@ -284,7 +304,7 @@ export default {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 30px;
+  width: 60px;
   height: 30px;
   user-select: none;
   -webkit-user-select: none;
@@ -299,8 +319,8 @@ export default {
   font-size: 20px;
 }
 
-.titlebar .fa-regular {
-  color: #d1d1d1;
-  font-size: 16px;
+.titlebar svg {
+  width: 13px;
+  height: 13px;
 }
 </style>
