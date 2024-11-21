@@ -3,10 +3,10 @@
   "productName": "jester-desktop",
   "version": "0.1.0",
   "identifier": "com.jester-desktop.app",
-  "build": {
-    "beforeDevCommand": "deno task dev",
+  "build": {  
+    "beforeDevCommand": "deno compile -A ./src-backend/server.ts && deno run -A ./src-tauri/bundler.js && deno task dev",
     "devUrl": "http://localhost:1420",
-    "beforeBuildCommand": "deno task build",
+    "beforeBuildCommand": "deno compile -A ./src-backend/server.ts && deno run -A ./src-tauri/bundler.js && deno task build",
     "frontendDist": "../dist"
   },
   "app": {
