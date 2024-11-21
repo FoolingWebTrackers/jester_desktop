@@ -7,7 +7,7 @@ fn greet(name: &str) -> String {
 }
 
 #[tauri::command]
-async fn ping(app: tauri::AppHandle) {
+async fn server_sidecar_handler(app: tauri::AppHandle) {
   app
     .shell()
     .sidecar("binaries/server")
@@ -20,7 +20,8 @@ async fn ping(app: tauri::AppHandle) {
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_shell::init())
-        .invoke_handler(tauri::generate_handler![ping])
+        .invoke_handler(tauri::generate_handler![server_sidecar_handler])
+        .invoke_handler(tauri::generate_handler![server_sidecar_killer])
         .invoke_handler(tauri::generate_handler![greet])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
