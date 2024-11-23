@@ -12,10 +12,6 @@
             <label for="password">Password</label>
             <input :type="showPassword ? 'text' : 'password'" id="password" v-model="loginPassword" required />
           </div>
-          <div class="checkbox-container">
-            <input type="checkbox" id="show-password" v-model="showPassword" />
-            <label for="show-password">Show Password</label>
-          </div>
           <button type="submit">Login</button>
         </form>
         <p>
