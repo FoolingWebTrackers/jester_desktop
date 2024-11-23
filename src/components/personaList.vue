@@ -10,7 +10,9 @@
       />
       <div class="persona-info">
         <h3 class="persona-name unselectable">{{ persona.name }}</h3>
-        <p v-if="showDescription" class="persona-desc unselectable">{{ persona.description }}</p>
+        <p v-if="showDescription" class="persona-desc unselectable">
+          {{ persona.description }}
+        </p>
       </div>
       <button class="select-button" @click="selectPersona(persona)">
         Select
@@ -44,11 +46,12 @@ export default {
         photo: persona.photo,
       })),
       windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
     };
   },
   computed: {
     showDescription() {
-      return this.windowWidth >= 900; // Set width threshold for showing description
+      return this.windowWidth >= 900 && this.windowHeight >= 600; // Set width threshold for showing description
     },
   },
   methods: {
@@ -61,16 +64,20 @@ export default {
     updateWindowWidth() {
       this.windowWidth = window.innerWidth;
     },
+    updateWindowHeight() {
+      this.windowHeight = window.innerHeight;
+    },
   },
   mounted() {
     window.addEventListener("resize", this.updateWindowWidth);
+    window.addEventListener("resize", this.updateWindowHeight);
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.updateWindowWidth);
+    window.removeEventListener("resize", this.updateWindowHeight);
   },
 };
 </script>
-
 
 <style scoped>
 .v-move,
@@ -140,7 +147,11 @@ input {
 }
 
 .persona-box {
-  background: linear-gradient(145deg, rgba(35, 37, 42, 0.7), rgba(40, 43, 48, 0.5));
+  background: linear-gradient(
+    145deg,
+    rgba(35, 37, 42, 0.7),
+    rgba(40, 43, 48, 0.5)
+  );
   height: 30vh;
   border-radius: 20px;
   padding: 1.5em;
@@ -156,7 +167,7 @@ input {
 
 @media (min-width: 800px) {
   .persona-box {
-    width: calc(25% - 10px); 
+    width: calc(25% - 10px);
   }
 }
 
@@ -165,6 +176,7 @@ input {
     width: calc(15% - 10px); /* 4 per row for even larger screens */
   }
 }
+
 /* Custom scrollbar styling */
 .persona-container::-webkit-scrollbar {
   width: 8px;
@@ -177,7 +189,7 @@ input {
 }
 
 .persona-container::-webkit-scrollbar-thumb {
-  background-color: #ab162b ;
+  background-color: #ab162b;
   border-radius: 10px;
   border: transparent;
 }
@@ -187,8 +199,7 @@ input {
   height: 70px;
   border-radius: 50%;
   margin-right: 10px;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5) ;
-
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
 }
 
 .persona-info {
@@ -200,10 +211,9 @@ input {
   font-size: 1.5em;
   color: #d1d1d1;
 }
-.persona-desc{
+.persona-desc {
   color: #d1d1d1;
   height: 2vh;
-    
 }
 
 .select-button {
@@ -213,7 +223,7 @@ input {
   border-radius: 5px;
   padding: 5px 10px;
   cursor: pointer;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5) ;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5);
 }
 .fa-solid {
   font-size: 20px;
