@@ -10,12 +10,7 @@
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input
-              :type="showPassword ? 'text' : 'password'"
-              id="password"
-              v-model="loginPassword"
-              required
-            />
+            <input :type="showPassword ? 'text' : 'password'" id="password" v-model="loginPassword" required />
           </div>
           <button type="submit">Login</button>
         </form>
@@ -30,30 +25,16 @@
         <form @submit.prevent="handleCreateUser">
           <div class="form-group">
             <label for="new-username">Username</label>
-            <input
-              type="text"
-              id="new-username"
-              v-model="newUsername"
-              required
-            />
+            <input type="text" id="new-username" v-model="newUsername" required />
           </div>
           <div class="form-group">
             <label for="new-password">Password</label>
-            <input
-              :type="showPassword ? 'text' : 'password'"
-              id="new-password"
-              v-model="newPassword"
-              required
-            />
+            <input :type="showPassword ? 'text' : 'password'" id="new-password" v-model="newPassword" required />
           </div>
           <div class="form-group">
             <label for="confirm-password">Re-enter Password</label>
-            <input
-              :type="showPassword ? 'text' : 'password'"
-              id="confirm-password"
-              v-model="confirmPassword"
-              required
-            />
+            <input :type="showPassword ? 'text' : 'password'" id="confirm-password" v-model="confirmPassword"
+              required />
           </div>
           <div class="checkbox-container">
             <input type="checkbox" id="show-password" v-model="showPassword" />
@@ -93,13 +74,6 @@ export default {
     switchToLogin() {
       this.showLoginForm = true;
     },
-    generateSalt() {
-      const array = new Uint8Array(256);
-      crypto.getRandomValues(array);
-      return Array.from(array)
-        .map((byte) => byte.toString(16).padStart(2, "0"))
-        .join("");
-    },
     handleLogin() {
       // TODO: Implement login logic
       console.log("Logging in with:", this.loginUsername, this.loginPassword);
@@ -111,37 +85,7 @@ export default {
         return;
       }
       // TODO: Implement user creation logic
-      this.createUser(this.newUsername, this.newPassword);
-    },
-    createUser(username, password) {
-      const salt = this.generateSalt();
-      console.log("Salt:", salt);
-      const sendRequest = async () => {
-        const url = "http://localhost:3000/createUser"; // Replace PORT with your server's port
-
-        const userData = {
-          username: username,
-          password: password,
-          salt: salt,
-        };
-
-        try {
-          const response = await fetch(url, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userData),
-          });
-        if (response.status === 200) {
-          alert("User created successfully!");
-          this.switchToLogin();
-        }
-        } catch (error) {
-          console.error("Error creating user:", error);
-        }
-      };
-      sendRequest();
+      console.log("Creating user with:", this.newUsername, this.newPassword);
     },
   },
 };
@@ -154,30 +98,39 @@ export default {
   align-items: center;
   height: 100vh;
   width: 100%;
-  background: radial-gradient(
-      circle at top left,
+  background:
+    radial-gradient(circle at top left,
       rgb(83, 91, 105),
       rgba(27, 30, 35, 0.7) 70%,
-      rgba(17, 20, 23, 0) 100%
-    ),
-    linear-gradient(130deg, rgba(60, 64, 71, 0.5) 30%, transparent 30%),
-    linear-gradient(60deg, rgba(50, 54, 61, 0.4) 30%, transparent 30%),
-    linear-gradient(200deg, rgba(37, 41, 47, 0.5) 30%, transparent 30%),
-    linear-gradient(320deg, rgba(33, 37, 43, 0.4) 30%, transparent 30%),
-    linear-gradient(140deg, rgba(45, 50, 58, 0.3) 40%, transparent 40%),
-    linear-gradient(310deg, rgba(25, 29, 33, 0.3) 40%, transparent 40%),
-    linear-gradient(240deg, rgba(40, 45, 52, 0.35) 50%, transparent 50%);
+      rgba(17, 20, 23, 0) 100%),
+    linear-gradient(130deg,
+      rgba(60, 64, 71, 0.5) 30%,
+      transparent 30%),
+    linear-gradient(60deg,
+      rgba(50, 54, 61, 0.4) 30%,
+      transparent 30%),
+    linear-gradient(200deg,
+      rgba(37, 41, 47, 0.5) 30%,
+      transparent 30%),
+    linear-gradient(320deg,
+      rgba(33, 37, 43, 0.4) 30%,
+      transparent 30%),
+    linear-gradient(140deg,
+      rgba(45, 50, 58, 0.3) 40%,
+      transparent 40%),
+    linear-gradient(310deg,
+      rgba(25, 29, 33, 0.3) 40%,
+      transparent 40%),
+    linear-gradient(240deg,
+      rgba(40, 45, 52, 0.35) 50%,
+      transparent 50%);
   background-size: cover;
   background-blend-mode: overlay;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .form-container {
-  background: linear-gradient(
-    145deg,
-    rgba(35, 37, 42, 0.7),
-    rgba(40, 43, 48, 0.5)
-  );
+  background: linear-gradient(145deg, rgba(35, 37, 42, 0.7), rgba(40, 43, 48, 0.5));
   /* Semi-transparent background */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px) saturate(100%); /* WebKit fallback for Safari */
