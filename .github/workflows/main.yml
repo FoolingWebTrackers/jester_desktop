@@ -3,7 +3,7 @@ name: "publish"
 on:
   push:
     branches:
-      - main
+      - main mbudak21-CI-patches
 
 jobs:
   publish-tauri:
@@ -28,6 +28,14 @@ jobs:
         with:
           submodules: recursive # Ensures submodules are initialized and updated
           token: ${{ secrets.GITHUB_TOKEN }} # Ensures proper authentication for private submodules
+
+      - name: Authenticate submodules
+        run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+        
+      - name: Fetch submodules
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive
 
       - name: setup node
         uses: actions/setup-node@v4
