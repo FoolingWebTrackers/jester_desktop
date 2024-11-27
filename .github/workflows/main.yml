@@ -27,16 +27,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN  }} # Ensures proper authentication for private submodules
           submodules: recursive # Ensures submodules are initialized and updated
-          token: ${{ secrets.GITHUB_TOKEN }} # Ensures proper authentication for private submodules
 
-      - name: Authenticate submodules
-        run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+      # - name: Authenticate submodules
+      #   run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
         
-      - name: Fetch submodules
-        run: |
-          git submodule sync --recursive
-          git submodule update --init --recursive
+      # - name: Double Fetch submodules
+      #   run: |
+      #     git submodule sync --recursive
+      #     git submodule update --init --recursive
 
       - name: setup node
         uses: actions/setup-node@v4
