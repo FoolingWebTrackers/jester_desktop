@@ -3,7 +3,8 @@ name: "publish"
 on:
   push:
     branches:
-      - main
+      - main 
+      - mbudak21-CI-patches
 
 jobs:
   publish-tauri:
@@ -26,8 +27,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN  }} # Ensures proper authentication for private submodules
           submodules: recursive # Ensures submodules are initialized and updated
-          token: ${{ secrets.GITHUB_TOKEN }} # Ensures proper authentication for private submodules
+
+      # - name: Authenticate submodules
+      #   run: git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
+        
+      # - name: Double Fetch submodules
+      #   run: |
+      #     git submodule sync --recursive
+      #     git submodule update --init --recursive
 
       - name: setup node
         uses: actions/setup-node@v4
@@ -56,6 +65,18 @@ jobs:
       - name: build Tauri app
         run: deno task tauri build
 
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        with:
+          tagName: app-v__VERSION__
+          releaseName: "App v__VERSION__"
+          releaseBody: "See the assets to download this version and install."
+          releaseDraft: true
+          prerelease: false
+          args: ${{ matrix.args }}
+
+
       # Upload the .dmg and .app.tar.gz files as GitHub release assets
       - name: Upload macOS .dmg artifact (if available)
         if: matrix.platform == 'macos-latest'
@@ -81,14 +102,3 @@ jobs:
         with:
           name: jester-desktop-binaries
           path: src-tauri/target/release/bundle/**/*.*
-
-      - uses: tauri-apps/tauri-action@v0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tagName: app-v__VERSION__
-          releaseName: "App v__VERSION__"
-          releaseBody: "See the assets to download this version and install."
-          releaseDraft: true
-          prerelease: false
-          args: ${{ matrix.args }}
