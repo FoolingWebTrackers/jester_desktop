@@ -80,7 +80,7 @@ jobs:
       # Upload the .dmg and .app.tar.gz files as GitHub release assets
       - name: Upload macOS .dmg artifact (if available)
         if: matrix.platform == 'macos-latest'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: jester-desktop-dmg
           path: |
@@ -89,7 +89,7 @@ jobs:
 
       - name: Upload macOS .app.tar.gz artifact (if available)
         if: matrix.platform == 'macos-latest'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: jester-desktop-app
           path: |
@@ -98,7 +98,7 @@ jobs:
 
       - name: Upload Linux and Windows artifacts
         if: matrix.platform == 'ubuntu-22.04' || matrix.platform == 'windows-latest'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: jester-desktop-binaries
           path: src-tauri/target/release/bundle/**/*.*
