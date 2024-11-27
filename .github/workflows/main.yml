@@ -75,30 +75,58 @@ jobs:
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
-
-
-      # Upload the .dmg and .app.tar.gz files as GitHub release assets
-      - name: Upload macOS .dmg artifact (if available)
-        if: matrix.platform == 'macos-latest'
-        uses: actions/upload-artifact@v4
+          
+      # Step to create a GitHub Release
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         with:
-          name: jester-desktop-dmg
-          path: |
+          tag_name: "v__VERSION__" # Replace __VERSION__ dynamically or use a static tag
+          release_name: "App v__VERSION__"
+          body: |
+            Release notes for version __VERSION__.
+            See the assets below to download this release.
+          draft: false
+          prerelease: false
+
+      # Upload macOS .dmg as a release asset
+      - name: Upload macOS .dmg artifact
+        if: matrix.platform == 'macos-latest'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: |
             src-tauri/target/aarch64-apple-darwin/release/bundle/dmg/*.dmg
             src-tauri/target/x86_64-apple-darwin/release/bundle/dmg/*.dmg
+          asset_name: jester-desktop-macos.dmg
+          asset_content_type: application/x-apple-diskimage
 
-      - name: Upload macOS .app.tar.gz artifact (if available)
+      # Upload macOS .app.tar.gz as a release asset
+      - name: Upload macOS .app.tar.gz artifact
         if: matrix.platform == 'macos-latest'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         with:
-          name: jester-desktop-app
-          path: |
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: |
             src-tauri/target/aarch64-apple-darwin/release/bundle/macos/*.tar.gz
             src-tauri/target/x86_64-apple-darwin/release/bundle/macos/*.tar.gz
+          asset_name: jester-desktop-macos.tar.gz
+          asset_content_type: application/gzip
 
+      # Upload Linux and Windows binaries as release assets
       - name: Upload Linux and Windows artifacts
         if: matrix.platform == 'ubuntu-22.04' || matrix.platform == 'windows-latest'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         with:
-          name: jester-desktop-binaries
-          path: src-tauri/target/release/bundle/**/*.*
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: src-tauri/target/release/bundle/**/*.*
+          asset_name: jester-desktop-${{ matrix.platform }}.zip
+          asset_content_type: application/zip
