@@ -3,7 +3,8 @@ name: "publish"
 on:
   push:
     branches:
-      - main mbudak21-CI-patches
+      - main 
+      - mbudak21-CI-patches
 
 jobs:
   publish-tauri:
