@@ -44,6 +44,7 @@ export default {
         photo: persona.photo,
       })),
       windowWidth: window.innerWidth,
+      pageUrl: "http://localhost:3000",
     };
   },
   computed: {
@@ -53,8 +54,23 @@ export default {
   },
   methods: {
     selectPersona(persona) {
-      this.selectedPersona = persona;
-    },
+      const sendRequest = async () => {
+        const url = this.pageUrl + "/browse"; // Replace PORT with your server's port
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            urls: persona.urls,
+          }),
+        });
+        console.log(response);
+        console.log("Selected persona:", persona);
+        console.log("links:", persona.urls); 
+    }
+    sendRequest();
+  },
     setDefaultPhoto(persona) {
       persona.photo = "profilePhotos/default.webp";
     },

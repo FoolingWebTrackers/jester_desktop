@@ -7,6 +7,12 @@
       placeholder="Enter your API key"
     />
     <p v-if="message" class="message">{{ message }}</p>
+    <p>Headless Mode</p>
+    <input
+      type="checkbox"
+      v-model="isHeadless"
+      @change="storeIsHeadless('userid', isHeadless)"
+    />
   </div>
 </template>
 
@@ -16,6 +22,7 @@ export default {
   data() {
     return {
       apiKey: "", // Stores the API key
+      isHeadless: false,
       message: "", // For user feedback
     };
   },
@@ -49,6 +56,17 @@ export default {
         console.warn("No API key found:", error);
       }
     },
+    storeIsHeadless(userId, isHeadless) {
+      // Store the headless mode setting
+      this.storeUserSetting(userId, "isHeadless", isHeadless);
+    },
+    getIsHeadless(userId) {
+      // Retrieve the headless mode setting
+      return this.getUserSetting(userId, "isHeadless");
+    },
+    loadIsHeadless() {
+      // Load the headless mode setting
+      this.isHeadless = this.getIsHeadless("userid");},
     storeUserSetting(userId, key, value) {
       // Compose a unique key for the user and setting
       const settingKey = `${userId}-${key}`;
@@ -65,6 +83,7 @@ export default {
   mounted() {
     // Load the API key when the component is mounted
     this.loadApiKey();
+    this.loadIsHeadless();
   },
 };
 </script>
