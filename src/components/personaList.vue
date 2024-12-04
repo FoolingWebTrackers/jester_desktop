@@ -29,6 +29,7 @@
 <script>
 import personasData from "/src/assets/personas.json";
 import personaDetail from "/src/components/personaDetail.vue";
+import { globalState } from "/src/eventBus.js";
 
 export default {
   components: {
@@ -53,6 +54,26 @@ export default {
     },
   },
   methods: {
+    async getUserPersonas(username) {
+      try {
+        const response = await fetch(this.pageUrl + "/getUserPersonas", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username: "your-username" }), // Replace with actual username
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch personas");
+        }
+
+        const data = await response.json();
+        this.personas = data.personas;
+      } catch (error) {
+        console.error("Error fetching personas:", error);
+      }
+    },
     selectPersona(persona) {
       const sendRequest = async () => {
         const url = this.pageUrl + "/browse"; // Replace PORT with your server's port
@@ -77,8 +98,11 @@ export default {
     updateWindowWidth() {
       this.windowWidth = window.innerWidth;
     },
+
   },
   mounted() {
+    //this.getUserPersonas(globalState.username);
+    console.log("User:", globalState.username);
     window.addEventListener("resize", this.updateWindowWidth);
   },
   beforeDestroy() {
