@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import { globalState } from "/src/eventBus.js";
 export default {
   data() {
     return {
@@ -105,6 +106,7 @@ export default {
       // TODO: Implement login logic
       console.log("Logging in with:", this.loginUsername);
       this.authenticateUser(this.loginUsername, this.loginPassword);
+      globalState.username = this.loginUsername;
     },
     handleCreateUser() {
       if (this.newPassword !== this.confirmPassword) {
