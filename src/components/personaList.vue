@@ -61,7 +61,7 @@ export default {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ username: "your-username" }), // Replace with actual username
+          body: JSON.stringify({ username: username }),
         });
 
         if (!response.ok) {
@@ -101,7 +101,7 @@ export default {
 
   },
   mounted() {
-    //this.getUserPersonas(globalState.username);
+    this.getUserPersonas(globalState.username);
     console.log("User:", globalState.username);
     window.addEventListener("resize", this.updateWindowWidth);
   },
