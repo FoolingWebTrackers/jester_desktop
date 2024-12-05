@@ -29,6 +29,7 @@
 <script>
 import personasData from "/src/assets/personas.json";
 import personaDetail from "/src/components/personaDetail.vue";
+import { globalState } from "/src/eventBus.js";
 
 export default {
   components: {
@@ -44,6 +45,7 @@ export default {
         photo: persona.photo,
       })),
       windowWidth: window.innerWidth,
+      pageUrl: "http://localhost:3000",
     };
   },
   computed: {
@@ -52,17 +54,55 @@ export default {
     },
   },
   methods: {
-    selectPersona(persona) {
-      this.selectedPersona = persona;
+    async getUserPersonas(username) {
+      try {
+        const response = await fetch(this.pageUrl + "/getUserPersonas", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username: username }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch personas");
+        }
+
+        const data = await response.json();
+        this.personas = data.personas;
+      } catch (error) {
+        console.error("Error fetching personas:", error);
+      }
     },
+    selectPersona(persona) {
+      const sendRequest = async () => {
+        const url = this.pageUrl + "/browse"; // Replace PORT with your server's port
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            urls: persona.urls,
+          }),
+        });
+        console.log(response);
+        console.log("Selected persona:", persona);
+        console.log("links:", persona.urls); 
+    }
+    sendRequest();
+  },
     setDefaultPhoto(persona) {
       persona.photo = "profilePhotos/default.webp";
     },
     updateWindowWidth() {
       this.windowWidth = window.innerWidth;
     },
+
   },
   mounted() {
+    this.getUserPersonas(globalState.username);
+    console.log("User:", globalState.username);
     window.addEventListener("resize", this.updateWindowWidth);
   },
   beforeDestroy() {

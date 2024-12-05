@@ -71,6 +71,7 @@
 </template>
 
 <script>
+import { globalState } from "/src/eventBus.js";
 export default {
   data() {
     return {
@@ -81,6 +82,7 @@ export default {
       newUsername: "",
       newPassword: "",
       confirmPassword: "",
+      pageUrl: "http://localhost:3000",
     };
   },
   methods: {
@@ -102,8 +104,9 @@ export default {
     },
     handleLogin() {
       // TODO: Implement login logic
-      console.log("Logging in with:", this.loginUsername, this.loginPassword);
-      this.$emit("login");
+      console.log("Logging in with:", this.loginUsername);
+      this.authenticateUser(this.loginUsername, this.loginPassword);
+      globalState.username = this.loginUsername;
     },
     handleCreateUser() {
       if (this.newPassword !== this.confirmPassword) {
@@ -113,11 +116,49 @@ export default {
       // TODO: Implement user creation logic
       this.createUser(this.newUsername, this.newPassword);
     },
+    authenticateUser(username, password) {
+      const sendRequest = async () => {
+        const url = this.pageUrl + "/authenticateUser";
+
+        const userData = {
+          username: username,
+          password: password
+        };
+
+        try {
+          const response = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+          });
+
+          if (response.ok) { // Check if the HTTP status code is 2xx
+            const data = await response.json(); // Parse the JSON body
+            if (data.user?.authentication === true) { // Access nested properties safely
+              console.log("User logged in successfully!");
+              this.$emit("login");
+              alert("User Logged Successfully!");
+            } else {
+              alert("User not authenticated!");
+            }
+          } else {
+            alert(`Error: ${response.status} ${response.statusText}`);
+          }
+        } catch (error) {
+          alert("There has been an error!");
+          console.error("Error logging in:", error);
+        }
+
+      };
+      sendRequest();
+    },
     createUser(username, password) {
       const salt = this.generateSalt();
       console.log("Salt:", salt);
       const sendRequest = async () => {
-        const url = "http://localhost:3000/createUser"; // Replace PORT with your server's port
+        const url = this.pageUrl + "/createUser"; // Replace PORT with your server's port
 
         const userData = {
           username: username,

@@ -1,11 +1,13 @@
 <template>
   <div class="create-persona-container">
     <input
+      v-model="personaName"
       type="text"
       placeholder="Persona Name"
       class="persona-name-input unselectable"
     />
     <input
+      v-model="personaDesc"
       type="text"
       placeholder="Persona Description"
       class="persona-description-input unselectable"
@@ -19,19 +21,53 @@
       <input type="checkbox" v-model="generatePhoto" />
       <label class="unselectable">AI generated photo</label>
     </div>
-    <button class="create-persona-button unselectable">Create Persona</button>
+    <button class="create-persona-button unselectable" @click="createPersona(this.username,this.personaName,this.personaDesc)">Create Persona</button>
   </div>
 </template>
 <script>
+import { globalState } from "/src/eventBus.js";
 export default {
   name: "createPersona",
   data() {
     return {
+      personaName: "",
+      username: globalState.username,
+      personaDesc: "",
       generateDesc: true,
       generatePhoto: false,
     };
   },
-  methods: {},
+  methods: {
+    async createPersona() {
+      const { username, personaName, personaDesc } = this;
+      if (!username || !personaName || !personaDesc) {
+        alert("All fields are required");
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:3000/createPersona", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, personaName, personaDesc }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to create persona");
+        }
+
+        const data = await response.json();
+        alert("Persona created successfully");
+        console.log(data);
+      } catch (error) {
+        console.error("Error creating persona:", error);
+        alert("Error creating persona");
+      }
+    },
+
+  },
 };
 </script>
 
