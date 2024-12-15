@@ -136,7 +136,7 @@ export default {
 
           if (response.ok) { // Check if the HTTP status code is 2xx
             const data = await response.json(); // Parse the JSON body
-            if (data.user?.authentication === true) { // Access nested properties safely
+            if (data.user?.authenticate_user === true) { // Access nested properties safely
               console.log("User logged in successfully!");
               this.$emit("login");
               alert("User Logged Successfully!");

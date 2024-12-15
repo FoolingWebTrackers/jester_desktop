@@ -1,11 +1,13 @@
 <template>
   <div class="create-persona-container">
+    <h1>Persona Name</h1>
     <input
       v-model="personaName"
       type="text"
       placeholder="Persona Name"
       class="persona-name-input unselectable"
     />
+    <h2>Persona Description</h2>
     <input
       v-model="personaDesc"
       type="text"
@@ -77,7 +79,7 @@ export default {
   flex-direction: column;
   align-items: left;
   justify-content: left;
-  max-height: 400px;
+  max-height: 90%;
   padding: 3px;
 }
 label {

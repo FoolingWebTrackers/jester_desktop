@@ -9,8 +9,8 @@
         @error="setDefaultPhoto(persona)"
       />
       <div class="persona-info">
-        <h3 class="persona-name unselectable">{{ persona.name }}</h3>
-        <p v-if="showDescription" class="persona-desc unselectable">{{ persona.description }}</p>
+        <h3 class="persona-name unselectable">{{ persona.persona_name }}</h3>
+        <p v-if="showDescription" class="persona-desc unselectable">{{ persona.persona_description }}</p>
       </div>
       <button v-if="persona === selectedPersona" class="selected-button" @click="selectPersona(persona)">
         Deselect
@@ -36,10 +36,7 @@ export default {
     return {
       iconSrc: "../../public/icon-128.png",
       selectedPersona: null,
-      personas: personasData.map((persona) => ({
-        ...persona,
-        photo: persona.photo,
-      })),
+      personas: null,
       windowWidth: window.innerWidth,
       pageUrl: "http://localhost:3000",
     };
@@ -98,7 +95,7 @@ export default {
 
   },
   mounted() {
-    //this.getUserPersonas(globalState.username);
+    this.getUserPersonas(globalState.username);
     console.log("User:", globalState.username);
     window.addEventListener("resize", this.updateWindowWidth);
   },
