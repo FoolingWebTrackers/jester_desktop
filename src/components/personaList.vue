@@ -12,16 +12,12 @@
         <h3 class="persona-name unselectable">{{ persona.name }}</h3>
         <p v-if="showDescription" class="persona-desc unselectable">{{ persona.description }}</p>
       </div>
-      <button class="select-button" @click="selectPersona(persona)">
+      <button v-if="persona === selectedPersona" class="selected-button" @click="selectPersona(persona)">
+        Deselect
+      </button>
+      <button v-else class="select-button" @click="selectPersona(persona)">
         Select
       </button>
-      <Transition mode="out-in">
-        <personaDetail
-          v-if="selectedPersona"
-          :persona="selectedPersona"
-          @close="selectedPersona = null"
-        />
-      </Transition>
     </div>
   </div>
 </template>
@@ -91,6 +87,7 @@ export default {
         console.log("links:", persona.urls); 
     }
     sendRequest();
+    this.selectedPersona = persona;
   },
     setDefaultPhoto(persona) {
       persona.photo = "profilePhotos/default.webp";
@@ -101,7 +98,7 @@ export default {
 
   },
   mounted() {
-    this.getUserPersonas(globalState.username);
+    //this.getUserPersonas(globalState.username);
     console.log("User:", globalState.username);
     window.addEventListener("resize", this.updateWindowWidth);
   },
@@ -244,6 +241,15 @@ input {
   color: #d1d1d1;
   height: 2vh;
     
+}
+.selected-button {
+  background-color: #ab162b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.5) ;
 }
 
 .select-button {
