@@ -13,7 +13,7 @@ git clone --recurse-submodules https://github.com/FoolingWebTrackers/jester_desk
 
 ```
 cd jester-desktop
-deno install
+deno install --allow-scripts
 ```
 
 For Desktop development, run:
