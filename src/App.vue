@@ -51,6 +51,10 @@
               <i class="fa-solid fa-plus"></i>
               <span class="label" :class="{ 'label--visible': isSidebarExtended }">Create Persona</span>
             </li>
+            <li @click="setActiveComponent('marketplace')" :class="{ active: activeComponent === 'marketplace' }">
+              <i class="fa-solid fa-user"></i>
+              <span class="label" :class="{ 'label--visible': isSidebarExtended }">Profile</span>
+            </li>
             <li @click="setActiveComponent('fakeMic')" :class="{ active: activeComponent === 'fakeMic' }">
               <i class="fa-solid fa-microphone"></i>
               <span class="label" :class="{ 'label--visible': isSidebarExtended }">Fake Mic</span>
@@ -84,6 +88,7 @@ import appSettings from "/src/components/appSettings.vue";
 import fakeMic from "/src/components/fakeMic.vue";
 import createPersona from "/src/components/createPersona.vue";
 import loginPage from "./components/loginPage.vue";
+import marketplace from "/src/components/marketplace.vue"
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import "@fortawesome/fontawesome-free/css/all.css";
 
@@ -102,7 +107,8 @@ export default {
     appSettings,
     fakeMic,
     createPersona,
-    loginPage
+    loginPage,
+    marketplace
   },
   methods: {
     extendSidebar() {
