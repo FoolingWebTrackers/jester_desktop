@@ -68,6 +68,7 @@ export default {
       }
     },
     selectPersona(persona) {
+      console.log("Selected persona:", persona);
       const sendRequest = async () => {
         const url = this.pageUrl + "/browse"; // Replace PORT with your server's port
         const response = await fetch(url, {
@@ -233,10 +234,12 @@ input {
 .persona-name {
   font-size: 1.5em;
   color: #d1d1d1;
+  word-wrap: break-word;
 }
 .persona-desc{
   color: #d1d1d1;
   height: 2vh;
+  word-wrap: break-word;
     
 }
 .selected-button {
