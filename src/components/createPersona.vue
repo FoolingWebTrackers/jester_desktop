@@ -13,12 +13,7 @@
       type="text"
       placeholder="Persona Description"
       class="persona-description-input unselectable"
-      :disabled="generateDesc"
     />
-    <div class="checkbox-container">
-      <input type="checkbox" v-model="generateDesc" />
-      <label class="unselectable">AI generated description</label>
-    </div>
     <div class="checkbox-container">
       <input type="checkbox" v-model="generatePhoto" />
       <label class="unselectable">AI generated photo</label>
@@ -35,7 +30,6 @@ export default {
       personaName: "",
       username: globalState.username,
       personaDesc: "",
-      generateDesc: true,
       generatePhoto: false,
     };
   },
