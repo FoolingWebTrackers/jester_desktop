@@ -82,7 +82,7 @@ export default {
       newUsername: "",
       newPassword: "",
       confirmPassword: "",
-      pageUrl: "http://localhost:3000",
+      pageUrl: "/api",
     };
   },
   methods: {
@@ -118,7 +118,7 @@ export default {
     },
     authenticateUser(username, password) {
       const sendRequest = async () => {
-        const url = this.pageUrl + "/authenticateUser";
+        const url = this.pageUrl + "/users/authenticate";
 
         const userData = {
           username: username,
@@ -135,13 +135,11 @@ export default {
           });
 
           if (response.ok) { // Check if the HTTP status code is 2xx
-            const data = await response.json(); // Parse the JSON body
-            if (data.user?.authenticate_user === true) { // Access nested properties safely
+            console.log(response);
+            if (response.ok) { // Access nested properties safely
               console.log("User logged in successfully!");
               this.$emit("login");
               alert("User Logged Successfully!");
-            } else {
-              alert("User not authenticated!");
             }
           } else {
             alert(`Error: ${response.status} ${response.statusText}`);
@@ -155,15 +153,13 @@ export default {
       sendRequest();
     },
     createUser(username, password) {
-      const salt = this.generateSalt();
-      console.log("Salt:", salt);
+
       const sendRequest = async () => {
-        const url = this.pageUrl + "/createUser"; // Replace PORT with your server's port
+        const url = this.pageUrl + "/users/register"; // Replace PORT with your server's port
 
         const userData = {
           username: username,
           password: password,
-          salt: salt,
         };
 
         try {
@@ -174,7 +170,7 @@ export default {
             },
             body: JSON.stringify(userData),
           });
-        if (response.status === 200) {
+        if (response.ok) {
           alert("User created successfully!");
           this.switchToLogin();
         }

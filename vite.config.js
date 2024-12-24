@@ -12,6 +12,13 @@ export default defineConfig(async () => ({
   clearScreen: false,
   // 2. tauri expects a fixed port, fail if that port is not available
   server: {
+    proxy: {
+      "/api": {
+        target: "http://nyverin.com:8080",
+        changeOrigin: true,
+        secure: false,
+      },
+    },
     port: 1420,
     strictPort: true,
     host: host || false,
