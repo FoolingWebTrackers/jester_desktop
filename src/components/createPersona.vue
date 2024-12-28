@@ -92,11 +92,7 @@ input[type="text"] {
   border: 2px solid #383636;
   border-radius: 30px;
 }
-input[type="text"]:disabled {
-  background-color: #f0f0f0;
-  color: #a1a1a1;
-  border-color: #d3d3d3;
-}
+
 .checkbox-container {
   display: flex;
   align-items: center;
