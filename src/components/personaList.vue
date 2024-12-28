@@ -9,8 +9,8 @@
         @error="setDefaultPhoto(persona)"
       />
       <div class="persona-info">
-        <h3 class="persona-name unselectable">{{ persona.persona_name }}</h3>
-        <p v-if="showDescription" class="persona-desc unselectable">{{ persona.persona_description }}</p>
+        <h3 class="persona-name unselectable">{{ persona.name }}</h3>
+        <p v-if="showDescription" class="persona-desc unselectable">{{ persona.description }}</p>
       </div>
       <button v-if="persona === selectedPersona" class="selected-button" @click="selectPersona(persona)">
         Deselect
@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import personasData from "/src/assets/personas.json";
 import personaDetail from "/src/components/personaDetail.vue";
 import { globalState } from "/src/eventBus.js";
 
@@ -38,7 +37,7 @@ export default {
       selectedPersona: null,
       personas: null,
       windowWidth: window.innerWidth,
-      pageUrl: "http://localhost:3000",
+      pageUrl: "/api",
     };
   },
   computed: {
@@ -49,12 +48,11 @@ export default {
   methods: {
     async getUserPersonas(username) {
       try {
-        const response = await fetch(this.pageUrl + "/getUserPersonas", {
-          method: "POST",
+        const response = await fetch(this.pageUrl + "/personas", {
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ username: username }),
         });
 
         if (!response.ok) {
@@ -62,7 +60,8 @@ export default {
         }
 
         const data = await response.json();
-        this.personas = data.personas;
+        console.log("response:", data);
+        this.personas = data;
       } catch (error) {
         console.error("Error fetching personas:", error);
       }
@@ -97,6 +96,7 @@ export default {
   },
   mounted() {
     this.getUserPersonas(globalState.username);
+    console.log("personas:", this.personas);
     console.log("User:", globalState.username);
     window.addEventListener("resize", this.updateWindowWidth);
   },
@@ -176,6 +176,7 @@ input {
 
 .persona-box {
   background: linear-gradient(145deg, rgba(35, 37, 42, 0.7), rgba(40, 43, 48, 0.5));
+  min-width: 200px;
   height: 30vh;
   border-radius: 20px;
   padding: 1.5em;
