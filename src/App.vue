@@ -124,7 +124,7 @@ export default {
       this.window.minimize();
     },
     maximizeWindow() {
-      this.window.maximize();
+      this.window.toggleMaximize();
     },
     async closeWindow() {
       try {
