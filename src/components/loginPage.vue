@@ -67,6 +67,9 @@
         </p>
       </div>
     </div>
+    <div class="server-status" :class="{ online: isServerOnline }">
+      Server Status: {{ isServerOnline ? 'Online' : 'Offline' }}
+    </div>
   </div>
 </template>
 
@@ -83,6 +86,7 @@ export default {
       newPassword: "",
       confirmPassword: "",
       pageUrl: "/api",
+      isServerOnline: false,
     };
   },
   methods: {
@@ -180,6 +184,33 @@ export default {
       };
       sendRequest();
     },
+    checkServerStatus() {
+      const checkConnection = async () => {
+        try {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', '/api', true);
+          
+          xhr.onload = () => {
+            // Server is considered online if we get any valid response
+            this.isServerOnline = xhr.responseText.includes('timestamp');
+          };
+          
+          xhr.onerror = () => {
+            this.isServerOnline = false;
+          };
+          
+          xhr.send();
+        } catch {
+          this.isServerOnline = false;
+        }
+      };
+      
+      checkConnection();
+      setInterval(checkConnection, 30000);
+    },
+  },
+  mounted() {
+    this.checkServerStatus();
   },
 };
 </script>
@@ -304,5 +335,33 @@ p a {
 
 p a:hover {
   text-decoration: underline;
+}
+
+.server-status {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #2a2a2a;
+  color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.server-status::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ff4444;
+  display: inline-block;
+}
+
+.server-status.online::before {
+  background-color: #44ff44;
 }
 </style>
