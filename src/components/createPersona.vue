@@ -1,26 +1,79 @@
 <template>
-  <div class="create-persona-container">
-    <h1>Persona Name</h1>
-    <input
-      v-model="personaName"
-      type="text"
-      placeholder="Persona Name"
-      class="persona-name-input unselectable"
-    />
-    <h2>Persona Description</h2>
-    <input
-      v-model="personaDesc"
-      type="text"
-      placeholder="Persona Description"
-      class="persona-description-input unselectable"
-    />
-    <div class="checkbox-container">
-      <input type="checkbox" v-model="generatePhoto" />
-      <label class="unselectable">AI generated photo</label>
+  <div class="create-persona-page">
+    <div class="content-wrapper">
+      <!-- Left Section -->
+      <div class="info-section">
+        <h1>Create Your Persona</h1>
+        <p class="description">
+          Design a unique browsing profile that will help generate automated traffic to confuse web trackers. 
+          The more detailed your description, the better our AI can generate relevant browsing patterns.
+        </p>
+        <div class="tips-container">
+          <h3>Tips for Effective Personas</h3>
+          <ul>
+            <li>
+              <i class="fa-solid fa-star"></i>
+              Define clear interests and hobbies
+            </li>
+            <li>
+              <i class="fa-solid fa-star"></i>
+              Include demographic details
+            </li>
+            <li>
+              <i class="fa-solid fa-star"></i>
+              Specify preferred websites or content
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Right Section -->
+      <div class="form-section">
+        <div class="form-container">
+          <form @submit.prevent="createPersona">
+            <div class="form-group">
+              <label for="persona-name">Persona Name</label>
+              <input
+                id="persona-name"
+                v-model="personaName"
+                type="text"
+                required
+                placeholder="Enter a memorable name"
+              />
+            </div>
+            
+            <div class="form-group">
+              <label for="persona-desc">Persona Description</label>
+              <textarea
+                id="persona-desc"
+                v-model="personaDesc"
+                required
+                rows="8"
+                placeholder="Describe your persona's interests, demographics, and preferred websites. For example: 'A cryptocurrency enthusiast who frequently visits trading platforms, blockchain news sites, and NFT marketplaces...'"
+              ></textarea>
+            </div>
+
+            <div class="options-group">
+              <div class="checkbox-container">
+                <input type="checkbox" id="generate-photo" v-model="generatePhoto" />
+                <label for="generate-photo">
+                  <i class="fa-solid fa-image"></i>
+                  Generate AI Photo
+                </label>
+              </div>
+            </div>
+
+            <button type="submit">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+              Create Persona
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
-    <button class="create-persona-button unselectable" @click="createPersona(this.username,this.personaName,this.personaDesc)">Create Persona</button>
   </div>
 </template>
+
 <script>
 import { globalState } from "/src/eventBus.js";
 export default {
@@ -68,97 +121,207 @@ export default {
 </script>
 
 <style scoped>
-.create-persona-container {
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  justify-content: left;
-  max-height: 90%;
-  padding: 3px;
-}
-label {
-  color: #d1d1d1;
-  -webkit-transition: color 0.2s ease-out;
-  -moz-transition: color 0.2s ease-out;
-  -o-transition: color 0.2s ease-out;
-  -ms-transition: color 0.2s ease-out;
-  transition: color 0.2s ease-out;
-}
-input[type="text"] {
+.create-persona-page {
+  position: relative;
+  min-height: 100vh;
   width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
+  padding: 2rem;
   box-sizing: border-box;
-  border: 2px solid #383636;
-  border-radius: 30px;
+}
+
+.content-wrapper {
+  display: grid;
+  grid-template-columns: 300px minmax(400px, 5fr);
+  gap: 2rem;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 3000px;
+}
+
+/* Left Section Styles */
+.info-section {
+  position: sticky;
+  top: 2rem;
+  width: 300px;
+}
+
+.info-section h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(45deg, #ff3b3b, #ff8080);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 700;
+}
+
+.description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #e1e1e1;
+  margin-bottom: 2rem;
+}
+
+.tips-container {
+  background: linear-gradient(145deg, rgba(35, 37, 42, 0.4), rgba(40, 43, 48, 0.2));
+  backdrop-filter: blur(12px);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tips-container h3 {
+  color: #f1f1f1;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.tips-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.tips-container li {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #e1e1e1;
+}
+
+.tips-container i {
+  color: #ff3b3b;
+  font-size: 0.8rem;
+}
+
+/* Right Section Styles */
+.form-section {
+  position: relative;
+  width: 100%;
+  max-width: 2500px;
+}
+
+.form-container {
+  background: linear-gradient(145deg, rgba(35, 37, 42, 0.7), rgba(40, 43, 48, 0.5));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px) saturate(100%);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #f1f1f1;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 1rem;
+  background-color: rgba(42, 44, 49, 0.8);
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: #fff;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 200px;
+  line-height: 1.5;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #ff3b3b;
+  box-shadow: 0 0 0 2px rgba(255, 59, 59, 0.2);
+}
+
+.options-group {
+  margin-bottom: 2rem;
 }
 
 .checkbox-container {
   display: flex;
   align-items: center;
-  justify-content: left;
-}
-input[type="checkbox"] {
-  display: flex;
-  appearance: none;
-  width: 30px;
-  height: 30px;
-  border: 2px solid #383636;
-  border-radius: 4px;
-  background-color: transparent;
-  transition: background-color 0.5s ease, border-color 0.5s ease;
-  cursor: pointer;
-}
-input[type="checkbox"]:checked {
-  background-color: #4a0000;
-  border-color: #ff0000;
-}
-input[type="checkbox"]:checked + label {
-  color: #ff0000;
-  -webkit-transition: color 0.2s ease-out;
-  -moz-transition: color 0.2s ease-out;
-  -o-transition: color 0.2s ease-out;
-  -ms-transition: color 0.2s ease-out;
-  transition: color 0.2s ease-out;
-}
-input[type="checkbox"]::after {
-  content: "";
-  position: relative;
-  top: 1px;
-  left: 9px;
-  width: 7px;
-  height: 18px;
-  border-right: 2px solid #fff;
-  border-bottom: 2px solid #fff;
-  transform: scale(0) rotate(178deg);
-  transition: transform 0.2s ease-in-out;
-  opacity: 0;
+  gap: 0.5rem;
 }
 
-input[type="checkbox"]:checked::after {
-  transform: scale(1) rotate(45deg);
-  opacity: 1;
-}
-.create-persona-button {
-  background-color: #383636;
-  color: #d1d1d1;
-  border: none;
-  border-radius: 30px;
-  padding: 12px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+.checkbox-container input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
   cursor: pointer;
-  transition: background-color 0.5s ease, color 0.5s ease;
 }
-.create-persona-button:hover {
-  background-color: #4a0000;
-  color: #ff0000;
+
+.checkbox-container label {
+  color: #f1f1f1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
-.create-persona-button:active {
-  background-color: #ff0000;
-  color: #d1d1d1;
+
+.checkbox-container i {
+  color: #ff3b3b;
+}
+
+button {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(45deg, #ff3b3b, #ff5c5c);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(45deg, #ff2525, #ff4747);
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Hide info section when space is limited */
+@media (max-width: 800px) {
+  .content-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .info-section {
+    display: none;
+  }
+
+  .form-section {
+    max-width: none;
+  }
 }
 </style>
