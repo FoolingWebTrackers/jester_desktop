@@ -1,7 +1,7 @@
 <template>
   <!-- Persona Container -->
   <div class="persona-container">
-    <div v-for="persona in personas" :key="persona.id" class="persona-box">
+    <div v-for="persona in personas" :key="persona.id"   :class="['persona-box', { selected: persona === selectedPersona }]">
       <img
         :src="persona.photo"
         alt="Persona Photo"
@@ -193,6 +193,13 @@ input {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px) saturate(100%); /* WebKit fallback for Safari */
   transition: transform 0.2s;
+}
+
+
+.persona-box.selected {
+  transform: scale(1.1);
+  box-shadow: 0 4px 26px #ff2525;
+  border: 2px solid #ff2525;
 }
 
 @media (min-width: 800px) {
