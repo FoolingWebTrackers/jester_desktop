@@ -60,8 +60,13 @@ export default {
         }
 
         const data = await response.json();
-        console.log("response:", data);
-        this.personas = data;
+
+      this.personas = data.map(persona => ({
+      ...persona,
+      photo: `data:image/jpeg;base64,${persona.imageBase64}`, // Assuming PNG format
+      }
+
+      ));
       } catch (error) {
         console.error("Error fetching personas:", error);
       }
