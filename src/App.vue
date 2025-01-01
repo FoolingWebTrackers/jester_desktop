@@ -52,8 +52,8 @@
               <span class="label" :class="{ 'label--visible': isSidebarExtended }">Create Persona</span>
             </li>
             <li @click="setActiveComponent('marketplace')" :class="{ active: activeComponent === 'marketplace' }">
-              <i class="fa-solid fa-user"></i>
-              <span class="label" :class="{ 'label--visible': isSidebarExtended }">Profile</span>
+              <i class="fa-solid fa-bag-shopping"></i>
+              <span class="label" :class="{ 'label--visible': isSidebarExtended }">Marketplace</span>
             </li>
             <li @click="setActiveComponent('fakeMic')" :class="{ active: activeComponent === 'fakeMic' }">
               <i class="fa-solid fa-microphone"></i>
