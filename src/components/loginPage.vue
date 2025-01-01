@@ -67,7 +67,7 @@
         </p>
       </div>
     </div>
-    <div class="server-status" :class="{ online: isServerOnline }">
+    <div class="server-status unselectable" :class="{ online: isServerOnline }">
       Server Status: {{ isServerOnline ? 'Online' : 'Offline' }}
     </div>
   </div>
@@ -364,4 +364,14 @@ p a:hover {
 .server-status.online::before {
   background-color: #44ff44;
 }
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
 </style>

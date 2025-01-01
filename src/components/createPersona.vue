@@ -83,7 +83,8 @@ export default {
       personaName: "",
       username: globalState.username,
       personaDesc: "",
-      generatePhoto: false,
+      pageUrl: "/api",
+      generatePhoto: false
     };
   },
   methods: {
@@ -94,13 +95,22 @@ export default {
         return;
       }
 
+
+      const userData = {
+            username: username, 
+            personaName: personaName, 
+            description: personaDesc,
+            generatePhoto: this.generatePhoto
+        };
+      console.log(userData);
       try {
-        const response = await fetch("http://localhost:3000/createPersona", {
+        const url = this.pageUrl + "/personas/register";
+        const response = await fetch(url, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ username, personaName, personaDesc }),
+          body: JSON.stringify(userData),
         });
 
         if (!response.ok) {
