@@ -185,6 +185,19 @@ export default {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px) saturate(100%);
   /* WebKit fallback for Safari */
+  animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Jester Logo */
@@ -210,6 +223,7 @@ export default {
   top: 0;
   left: 0;
   z-index: 1;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar--extended {
@@ -247,14 +261,22 @@ export default {
   display: flex;
   align-items: center;
   position: relative;
+  transition: all 0.2s ease;
 }
 
 .fa-solid {
   font-size: 30px;
+  transition: transform 0.2s ease;
 }
 
 .sidebar nav ul li:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(2px);
+}
+
+.sidebar nav ul li.active {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar nav ul li.active::before {
@@ -265,10 +287,8 @@ export default {
   bottom: 0;
   width: 4px;
   background: #ff3b3b;
-}
-
-.sidebar nav ul li.active {
-  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 0 8px rgba(255, 59, 59, 0.5);
 }
 
 /* Labels */
@@ -279,6 +299,8 @@ export default {
   transition: opacity 0.3s ease, transform 0.3s ease;
   white-space: nowrap;
   margin-left: 10px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
 }
 
 .label--visible {
@@ -297,11 +319,24 @@ export default {
   margin-left: 60px;
   /* Adjusted for fixed sidebar */
   transition: margin-left 0.3s ease; /* Smooth transition */
+  opacity: 0;
+  animation: fadeIn 0.3s ease forwards;
 }
 
 .sidebar--extended~.main-content {
   margin-left: 200px;
   /* Adjust when sidebar is extended */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 </style>
 
@@ -316,7 +351,7 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(145deg, rgba(35, 37, 42, 0.7), rgba(40, 43, 48, 0.5));
+  background: linear-gradient(145deg, rgba(35, 37, 42, 0.9), rgba(40, 43, 48, 0.8));
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px) saturate(100%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -330,10 +365,11 @@ export default {
   height: 30px;
   user-select: none;
   -webkit-user-select: none;
+  transition: background-color 0.2s ease;
 }
 
 .titlebar-button:hover {
-  background: rgba(87, 39, 39, 0.5);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .titlebar .fa-solid {
@@ -344,5 +380,9 @@ export default {
 .titlebar svg {
   width: 13px;
   height: 13px;
+}
+
+#titlebar-close:hover {
+  background: rgba(232, 17, 35, 0.9);
 }
 </style>
