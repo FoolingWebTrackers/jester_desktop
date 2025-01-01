@@ -316,6 +316,10 @@ export default {
   top: 0;
   left: 0;
   right: 0;
+  background: linear-gradient(145deg, rgba(35, 37, 42, 0.7), rgba(40, 43, 48, 0.5));
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px) saturate(100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .titlebar-button {

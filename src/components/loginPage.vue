@@ -339,7 +339,7 @@ p a:hover {
 
 .server-status {
   position: absolute;
-  top: 1rem;
+  bottom: 1rem;
   left: 1rem;
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
