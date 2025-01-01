@@ -222,7 +222,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 99;
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -355,6 +355,7 @@ export default {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px) saturate(100%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 98;
 }
 
 .titlebar-button {
