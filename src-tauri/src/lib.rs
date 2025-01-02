@@ -48,6 +48,11 @@ pub fn run() {
         .plugin(tauri_plugin_shell::init())
         .invoke_handler(tauri::generate_handler![server_sidecar_handler, greet, quit_handler])
         .setup(|app| {
+            // Default to showing the window
+            let window = app.get_webview_window("main").unwrap();
+            window.show().unwrap();
+
+            
             // Define the menu items for the tray
             let quit_i = MenuItem::with_id(app, "quit", "Quit Jester Desktop", true, None::<&str>)?;
             let hide_i = MenuItem::with_id(app, "hide", "Hide/Show", true, None::<&str>)?;
