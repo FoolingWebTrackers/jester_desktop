@@ -126,20 +126,8 @@ export default {
     maximizeWindow() {
       this.window.toggleMaximize();
     },
-    async closeWindow() {
-      try {
-        // Send POST to localhost:3000/killme, await the response, and print the output to console
-        this.window.hide();
-
-        const response = await fetch("http://localhost:3000/killme", {
-          method: "POST"
-        });
-        const data = await response.text();
-        console.log(data);
-      } catch (error) {
-        console.error(error);
-      }
-      this.window.close();
+    closeWindow() {
+      this.window.hide();
     }
   },
 };
