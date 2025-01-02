@@ -49,10 +49,13 @@ export default {
     async getUserPersonas(username) {
       try {
         const response = await fetch(this.pageUrl + "/personas", {
-          method: "GET",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
+          body: JSON.stringify({
+            username: username,
+          }),
         });
 
         if (!response.ok) {
@@ -72,16 +75,16 @@ export default {
       }
     },
     selectPersona(persona) {
-      console.log("Selected persona:", persona);
+      console.log("Selected persona links:", persona.links);
       const sendRequest = async () => {
-        const url = this.pageUrl + "/browse"; // Replace PORT with your server's port
+        const url = "http://localhost:3000" + "/browse"; // Replace PORT with your server's port
         const response = await fetch(url, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            urls: persona.urls,
+            urls: persona.links,
           }),
         });
         console.log(response);
