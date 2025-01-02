@@ -10,18 +10,13 @@
     "frontendDist": "../dist"
   },
   "app": {
-    "trayIcon": {
-      "iconPath": "icons/icon-128.png",
-      "iconAsTemplate": true
-    },
     "windows": [
       {
         "title": "Jester",
         "width": 877,
         "transparent": false,
         "height": 788,
-        "decorations": false,
-        "visible": false
+        "decorations": false
       }
     ],
     "security": {
