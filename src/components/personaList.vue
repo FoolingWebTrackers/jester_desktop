@@ -10,7 +10,7 @@
       />
       <div class="persona-info">
         <h3 class="persona-name unselectable">{{ persona.name }}</h3>
-        <p v-if="showDescription" class="persona-desc unselectable">{{ persona.description }}</p>
+        <p v-if="showDescription" class="persona-desc unselectable"   :style="{ maxHeight: this.windowHeight >= 900 ? '100px' : '60px' }">{{ persona.description }}</p>
       </div>
       <button v-if="persona === selectedPersona" class="selected-button" @click="selectPersona(persona)">
         Deselect
@@ -37,12 +37,13 @@ export default {
       selectedPersona: null,
       personas: null,
       windowWidth: window.innerWidth,
+      windowHeight: window.innerHeight,
       pageUrl: "/api",
     };
   },
   computed: {
     showDescription() {
-      return this.windowWidth >= 900; // Set width threshold for showing description
+      return this.windowWidth >= 600 && this.windowHeight >=400; // Set width threshold for showing description
     },
   },
   methods: {
@@ -97,19 +98,20 @@ export default {
     setDefaultPhoto(persona) {
       persona.photo = "profilePhotos/default.webp";
     },
-    updateWindowWidth() {
+    updateWindowSize() {
       this.windowWidth = window.innerWidth;
-    },
+      this.windowHeight = window.innerHeight;
+    },  
 
   },
   mounted() {
     this.getUserPersonas(globalState.username);
     console.log("personas:", this.personas);
     console.log("User:", globalState.username);
-    window.addEventListener("resize", this.updateWindowWidth);
+    window.addEventListener("resize", this.updateWindowSize);
   },
   beforeDestroy() {
-    window.removeEventListener("resize", this.updateWindowWidth);
+    window.removeEventListener("resize", this.updateWindowSize);
   },
 };
 </script>
@@ -242,21 +244,48 @@ input {
 
 }
 
-.persona-info {
-  width: 100%;
-  flex: 1;
-}
-
 .persona-name {
   font-size: 1.5em;
   color: #d1d1d1;
   word-wrap: break-word;
 }
-.persona-desc{
+
+
+.persona-desc {
   color: #d1d1d1;
-  height: 2vh;
+  max-height: 60px; /* Limit the height */
+  overflow-y: scroll;
+  text-overflow: ellipsis;
+  white-space: normal; /* Prevent breaking words */
   word-wrap: break-word;
-    
+  margin-bottom: 10px; /* Ensure spacing before button */
+}
+/* Custom modern and minimal scrollbar styling for persona description */
+.persona-desc::-webkit-scrollbar {
+    width: 6px; /* Thin scrollbar */
+}
+
+.persona-desc::-webkit-scrollbar-track {
+    background: transparent; /* Invisible track for a minimal look */
+}
+
+.persona-desc::-webkit-scrollbar-thumb {
+    background: #474a50; /* Matches your button color */
+    border-radius: 10px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: background-color 0.3s ease;
+}
+
+.persona-desc::-webkit-scrollbar-thumb:hover {
+    background: #24262b; /* Slightly brighter on hover for interaction feedback */
+}
+
+
+.select-button, 
+.selected-button {
+  align-self: center; /* Keep the button centered at the bottom */
+  margin-top: auto;  /* Push the button to the bottom of the flex container */
 }
 .selected-button {
   background-color: #ab162b;
