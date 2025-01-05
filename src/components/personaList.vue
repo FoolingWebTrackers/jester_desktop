@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     showDescription() {
-      return this.windowWidth >= 600 && this.windowHeight >=400; // Set width threshold for showing description
+      return this.windowWidth >= 600 && this.windowHeight >=741; // Set width threshold for showing description
     },
   },
   methods: {
@@ -147,7 +147,7 @@ export default {
   display: flex;
   width: 100%;
   justify-content: space-evenly;
-  height: 100px; /* Adjusted height to accommodate labels */
+  height: 100px; 
 }
 .button-group {
   display: flex;
@@ -158,8 +158,8 @@ export default {
 }
 
 label {
-  margin-top: 5px; /* Space between button and label */
-  color: #d1d1d1; /* Adjust label color as needed */
+  margin-top: 5px;
+  color: #d1d1d1; 
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
