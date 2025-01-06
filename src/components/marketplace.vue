@@ -12,10 +12,7 @@
         <h3 class="persona-name unselectable">{{ persona.name }}</h3>
         <p v-if="showDescription" class="persona-desc unselectable"   :style="{ maxHeight: this.windowHeight >= 900 ? '100px' : '60px' }">{{ persona.description }}</p>
       </div>
-      <button v-if="persona === selectedPersona" class="selected-button" @click="buyPersona(persona)">
-        Deselect
-      </button>
-      <button v-else class="select-button" @click="buyPersona(persona)">
+      <button class="select-button" @click="buyPersona(persona)">
         Buy
       </button>
     </div>
@@ -30,11 +27,10 @@ export default {
   components: {
     personaDetail,
   },
-  name: "personaList",
+  name: "marketplace",
   data() {
     return {
       iconSrc: "../../public/icon-128.png",
-      selectedPersona: null,
       personas: null,
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
@@ -88,6 +84,12 @@ export default {
             personaName: persona.name,
           }),
         });
+      if (!response.ok) {
+        console.error("Failed to buy persona");
+      } else {
+        this.personas = this.personas.filter(p => p !== persona); 
+        alert("Persona bought successfully!");
+      }
     }
     sendRequest();
   },
