@@ -37,6 +37,7 @@ export default {
       personas: null,
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
+      selectedPersona: globalState.selectedPersona,
       pageUrl: "/api",
     };
   },

@@ -1,7 +1,7 @@
 <template>
   <!-- Persona Container -->
   <div class="persona-container">
-    <div v-for="persona in personas" :key="persona.id"   :class="['persona-box', { selected: persona === selectedPersona }]">
+    <div v-for="persona in personas" :key="persona.id"   :class="['persona-box', { selected: persona === this.selectedPersona }]">
       <img
         :src="persona.photo"
         alt="Persona Photo"
@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       iconSrc: "../../public/icon-128.png",
-      selectedPersona: null,
+      selectedPersona: globalState.selectedPersona,
       personas: null,
       windowWidth: window.innerWidth,
       windowHeight: window.innerHeight,
@@ -88,6 +88,7 @@ export default {
             urls: persona.links,
           }),
         });
+        globalState.selectedPersona = persona;
         console.log(response);
         console.log("Selected persona:", persona);
         console.log("links:", persona.urls); 
@@ -105,7 +106,15 @@ export default {
 
   },
   mounted() {
-    this.getUserPersonas(globalState.username);
+    this.getUserPersonas(globalState.username).then(() => {
+      if (globalState.selectedPersona) {
+      const matchedPersona = this.personas.find(persona => persona.id === globalState.selectedPersona.id);
+      if (matchedPersona) {
+        this.selectedPersona = matchedPersona;
+      }
+      }
+    });
+    console.log("Selected persona:", this.selectedPersona);
     console.log("personas:", this.personas);
     console.log("User:", globalState.username);
     window.addEventListener("resize", this.updateWindowSize);
