@@ -26,7 +26,6 @@ async fn quit_handler(app: tauri::AppHandle) {
     match reqwest::Client::new()
         .get("http://localhost:3000/killme")
         .header("Content-Type", "application/json") // Explicit content type
-        .body("{}") // Explicit empty JSON body
         .send()
         .await
     {
