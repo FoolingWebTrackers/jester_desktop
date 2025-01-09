@@ -2,9 +2,15 @@
 
   <div class="settings-container">
     <button @click="logout">Logout
-    </button> 
-    <p>API Key</p>
-    <input v-model="apiKey" @input="storeApiKey" placeholder="Enter your API key" />
+    </button>
+    <div class="slidecontainer">
+      <input v-model="concurrentPages" type="range" min="1" max="20" value="3" class="slider" id="myRange">
+      <p>Concurrent Pages: {{ concurrentPages }}</p>
+    </div>
+    <div class="slidecontainer">
+      <input v-model="pageTime" type="range" min="1" max="300" value="3" class="slider" id="myRange">
+      <p>Page Time: {{ pageTime }}</p>
+    </div>
     <p v-if="message" class="message">{{ message }}</p>
     <p>Headless Mode</p>
     <input type="checkbox" v-model="isHeadless" @change="storeIsHeadless('userid', isHeadless)" />
@@ -19,6 +25,8 @@ export default {
       apiKey: "", // Stores the API key
       isHeadless: false,
       message: "", // For user feedback
+      concurrentPages: 3,
+      pageTime: 3,
     };
   },
   methods: {
@@ -84,6 +92,12 @@ export default {
     this.loadApiKey();
     this.loadIsHeadless();
   },
+  watch: {
+    concurrentPages(newValue) {
+    },
+    pageTime(newValue) {
+    },
+  },
 };
 </script>
 
@@ -114,12 +128,43 @@ button:active {
   transform: translateY(0);
 }
 
+.slider {
+  --webkit-appearance: none;
+  width: 90%;
+  height: 15px;
+  border-radius: 5px;  
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  --webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  --webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #04AA6D;
+  cursor: pointer;
+} 
+
 .settings-container {
+  margin: 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(145deg, rgba(35, 37, 42, 0.7), rgba(40, 43, 48, 0.5));
   border-radius: 10px;
   color: white;
   font-family: Arial, sans-serif;

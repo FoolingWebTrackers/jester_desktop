@@ -12,7 +12,7 @@
         <h3 class="persona-name unselectable">{{ persona.name }}</h3>
         <p v-if="showDescription" class="persona-desc unselectable"   :style="{ maxHeight: this.windowHeight >= 900 ? '100px' : '60px' }">{{ persona.description }}</p>
       </div>
-      <button v-if="persona === selectedPersona" class="selected-button" @click="selectPersona(persona)">
+      <button v-if="persona === selectedPersona" class="selected-button" @click="deselectPersona(persona)">
         Deselect
       </button>
       <button v-else class="select-button" @click="selectPersona(persona)">
@@ -96,6 +96,10 @@ export default {
     sendRequest();
     this.selectedPersona = persona;
   },
+    deselectPersona(persona) {
+      globalState.selectedPersona = null;
+      this.selectedPersona = null;
+    },
     setDefaultPhoto(persona) {
       persona.photo = "profilePhotos/default.webp";
     },
