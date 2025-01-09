@@ -34,7 +34,7 @@
     </div>
 
     <!-- Login Page -->
-    <loginPage v-if="!loggedIn" @login="loggedIn = true" />
+    <loginPage v-if="!loggedIn" @login="loggedIn = true"/>
 
     <!-- Main Content -->
     <div v-if="loggedIn">
@@ -55,10 +55,10 @@
               <i class="fa-solid fa-bag-shopping"></i>
               <span class="label" :class="{ 'label--visible': isSidebarExtended }">Marketplace</span>
             </li>
-            <li @click="setActiveComponent('fakeMic')" :class="{ active: activeComponent === 'fakeMic' }">
+            <!-- <li @click="setActiveComponent('fakeMic')" :class="{ active: activeComponent === 'fakeMic' }">
               <i class="fa-solid fa-microphone"></i>
               <span class="label" :class="{ 'label--visible': isSidebarExtended }">Fake Mic</span>
-            </li>
+            </li> -->
             <li @click="setActiveComponent('appProfile')" :class="{ active: activeComponent === 'appProfile' }">
               <i class="fa-solid fa-user"></i>
               <span class="label" :class="{ 'label--visible': isSidebarExtended }">Profile</span>
@@ -75,7 +75,7 @@
 
       <!-- Main Content Area -->
       <main class="main-content">
-        <component :is="activeComponent" />
+        <component :is="activeComponent" @logout="logout" />
       </main>
     </div>
   </div>
@@ -128,6 +128,10 @@ export default {
     },
     closeWindow() {
       this.window.hide();
+    },
+    logout() {
+      this.loggedIn = false;
+      globalState.username = "";
     }
   },
 };

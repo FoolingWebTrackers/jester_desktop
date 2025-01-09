@@ -24,7 +24,7 @@ async fn server_sidecar_handler(app: tauri::AppHandle) {
 async fn quit_handler(app: tauri::AppHandle) {
     // Send POST request to terminate the sidecar with an explicit empty body
     match reqwest::Client::new()
-        .post("http://localhost:3000/killme")
+        .get("http://localhost:3000/killme")
         .header("Content-Type", "application/json") // Explicit content type
         .body("{}") // Explicit empty JSON body
         .send()

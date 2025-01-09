@@ -1,6 +1,10 @@
 <template>
   <div class="create-persona-page">
-    <div class="content-wrapper">
+    <div v-if="loading" class="loading-screen">
+      <span class="loader"></span>      
+      <p>Loading...</p>
+    </div>
+    <div v-else class="content-wrapper">
       <!-- Left Section -->
       <div class="info-section">
         <h1>Create Your Persona</h1>
@@ -84,7 +88,8 @@ export default {
       username: globalState.username,
       personaDesc: "",
       pageUrl: "/api",
-      generatePhoto: false
+      generatePhoto: false,
+      loading: false
     };
   },
   methods: {
@@ -102,7 +107,7 @@ export default {
             description: personaDesc,
             generatePhoto: this.generatePhoto
         };
-      console.log(userData);
+        this.loading=true
       try {
         const url = this.pageUrl + "/personas/register";
         const response = await fetch(url, {
@@ -124,6 +129,9 @@ export default {
         console.error("Error creating persona:", error);
         alert("Error creating persona");
       }
+      finally{
+        this.loading=false
+      }
     },
 
   },
@@ -138,6 +146,55 @@ export default {
   padding: 2rem;
   box-sizing: border-box;
 }
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.loader {
+        width: 84px;
+        height: 84px;
+        position: relative;
+        overflow: hidden;
+      }
+      .loader:before , .loader:after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        width:64px;
+        height: 64px;
+        border-radius: 50%;
+        background:#FFF;
+        transform: translate(-50% , 100%)  scale(0);
+        animation: push 2s infinite ease-in;
+      }
+      .loader:after {
+      animation-delay: 1s;
+      }
+      @keyframes push {
+          0% {
+            transform: translate(-50% , 100%)  scale(1);
+          }
+          15% , 25%{
+            transform: translate(-50% , 50%)  scale(1);
+          }
+        50% , 75% {
+            transform: translate(-50%, -30%) scale(0.5);
+          }
+        80%,  100% {
+            transform: translate(-50%, -50%) scale(0);
+          }
+      }
 
 .content-wrapper {
   display: grid;

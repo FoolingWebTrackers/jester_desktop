@@ -1,18 +1,13 @@
 <template>
+
   <div class="settings-container">
+    <button @click="logout">Logout
+    </button> 
     <p>API Key</p>
-    <input
-      v-model="apiKey"
-      @input="storeApiKey"
-      placeholder="Enter your API key"
-    />
+    <input v-model="apiKey" @input="storeApiKey" placeholder="Enter your API key" />
     <p v-if="message" class="message">{{ message }}</p>
     <p>Headless Mode</p>
-    <input
-      type="checkbox"
-      v-model="isHeadless"
-      @change="storeIsHeadless('userid', isHeadless)"
-    />
+    <input type="checkbox" v-model="isHeadless" @change="storeIsHeadless('userid', isHeadless)" />
   </div>
 </template>
 
@@ -66,7 +61,8 @@ export default {
     },
     loadIsHeadless() {
       // Load the headless mode setting
-      this.isHeadless = this.getIsHeadless("userid");},
+      this.isHeadless = this.getIsHeadless("userid");
+    },
     storeUserSetting(userId, key, value) {
       // Compose a unique key for the user and setting
       const settingKey = `${userId}-${key}`;
@@ -79,6 +75,9 @@ export default {
       const value = localStorage.getItem(settingKey);
       return value ? JSON.parse(value) : null;
     },
+    logout() {
+      this.$emit("logout");
+    },
   },
   mounted() {
     // Load the API key when the component is mounted
@@ -89,6 +88,32 @@ export default {
 </script>
 
 <style scoped>
+button {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(45deg, #ff3b3b, #ff5c5c);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(45deg, #ff2525, #ff4747);
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
 .settings-container {
   display: flex;
   flex-direction: column;
