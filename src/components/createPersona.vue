@@ -2,7 +2,7 @@
   <div class="create-persona-page">
     <div v-if="loading" class="loading-screen">
       <span class="loader"></span>      
-      <p>Loading...</p>
+      <p class="loading-text">Loading...</p>
     </div>
     <div v-else class="content-wrapper">
       <!-- Left Section -->
@@ -158,6 +158,11 @@ export default {
   align-items: center;
   justify-content: center;
   z-index: 1000;
+}
+.loading-text {
+  color: #fff;
+  font-size: 1.5rem;
+  margin-top: 1rem;
 }
 
 .loader {
