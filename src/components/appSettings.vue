@@ -2,11 +2,11 @@
 
   <div class="settings-container">
     <div class="slidecontainer">
-      <input v-model="concurrentPages" type="range" min="1" max="20" value="3" class="slider" id="myRange">
+      <input v-model="concurrentPages" type="range" min="1" max="20" class="slider">
       <p>Concurrent Pages: {{ concurrentPages }}</p>
     </div>
     <div class="slidecontainer">
-      <input v-model="pageTime" type="range" min="1" max="300" value="3" class="slider" id="myRange">
+      <input v-model="pageTime" type="range" min="1" max="300" class="slider">
       <p>Page Time: {{ pageTime }}</p>
     </div>
     <p v-if="message" class="message">{{ message }}</p>
@@ -79,7 +79,7 @@ export default {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            concurrent_pages: this.concurrentPages,
+            concurrent_pages: this.concurrentPages * 1,
             page_time: this.pageTime * 1000,
             headless: this.isHeadless,
             loop_links: this.loopLinks,
