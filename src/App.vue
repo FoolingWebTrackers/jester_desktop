@@ -132,6 +132,7 @@ export default {
     logout() {
       this.loggedIn = false;
       globalState.username = "";
+      globalState.selectedPersona = null;
     }
   },
 };

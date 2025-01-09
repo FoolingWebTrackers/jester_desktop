@@ -1,8 +1,6 @@
 <template>
 
   <div class="settings-container">
-    <button @click="logout">Logout
-    </button>
     <div class="slidecontainer">
       <input v-model="concurrentPages" type="range" min="1" max="20" value="3" class="slider" id="myRange">
       <p>Concurrent Pages: {{ concurrentPages }}</p>
@@ -13,7 +11,11 @@
     </div>
     <p v-if="message" class="message">{{ message }}</p>
     <p>Headless Mode</p>
-    <input type="checkbox" v-model="isHeadless" @change="storeIsHeadless('userid', isHeadless)" />
+    <input type="checkbox" v-model="isHeadless" />
+    <p>Loop Links</p>
+    <input type="checkbox" v-model="loopLinks" />
+    <button @click="logout">Logout
+    </button>
   </div>
 </template>
 
@@ -27,6 +29,7 @@ export default {
       message: "", // For user feedback
       concurrentPages: 3,
       pageTime: 3,
+      loopLinks: false,
     };
   },
   methods: {
@@ -46,56 +49,63 @@ export default {
         this.message = "";
       }, 2000);
     },
-    loadApiKey() {
-      try {
-        // Load the API key from localStorage
-        const savedApiKey = this.getUserSetting("userid", "apiKey");
-
-        // Set the API key if it exists
-        if (savedApiKey) {
-          this.apiKey = savedApiKey;
-        }
-      } catch (error) {
-        console.warn("No API key found:", error);
-      }
-    },
-    storeIsHeadless(userId, isHeadless) {
-      // Store the headless mode setting
-      this.storeUserSetting(userId, "isHeadless", isHeadless);
-    },
-    getIsHeadless(userId) {
-      // Retrieve the headless mode setting
-      return this.getUserSetting(userId, "isHeadless");
-    },
-    loadIsHeadless() {
-      // Load the headless mode setting
-      this.isHeadless = this.getIsHeadless("userid");
-    },
-    storeUserSetting(userId, key, value) {
-      // Compose a unique key for the user and setting
-      const settingKey = `${userId}-${key}`;
-      localStorage.setItem(settingKey, JSON.stringify(value));
-    },
-
-    getUserSetting(userId, key) {
-      // Retrieve the setting for the specific user
-      const settingKey = `${userId}-${key}`;
-      const value = localStorage.getItem(settingKey);
-      return value ? JSON.parse(value) : null;
-    },
     logout() {
       this.$emit("logout");
     },
+    loadSettings(){
+      const sendRequest = async () => {
+        const url = "http://localhost:3000" + "/config";
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then((response) => response.json())
+          .then((data) => {
+            this.concurrentPages = data.concurrent_pages;
+            this.pageTime = data.page_time / 1000;
+            this.isHeadless = data.headless;
+            this.loopLinks = data.loop_links;
+          });
+      }
+      sendRequest();
+    },
+    storeSettings() {
+      const sendRequest = async () => {
+        const url = "http://localhost:3000" + "/config";
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            concurrent_pages: this.concurrentPages,
+            page_time: this.pageTime * 1000,
+            headless: this.isHeadless,
+            loop_links: this.loopLinks,
+          }),
+        })
+      }
+      sendRequest();
+    },
+
   },
   mounted() {
     // Load the API key when the component is mounted
-    this.loadApiKey();
-    this.loadIsHeadless();
+    this.loadSettings();
   },
   watch: {
     concurrentPages(newValue) {
+      this.storeSettings();
     },
     pageTime(newValue) {
+      this.storeSettings();
+    },
+    isHeadless(newValue) {
+      this.storeSettings();
+    },
+    loopLinks(newValue) {
+      this.storeSettings();
     },
   },
 };

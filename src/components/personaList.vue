@@ -73,7 +73,12 @@ export default {
       }
     },
     selectPersona(persona) {
-      this.deselectPersona();
+      if (this.selectedPersona !== null) {
+        return;
+      }
+      setTimeout(() => {
+        this.selectedPersona = persona;
+      }, 1000);
       console.log("Selected persona links:", persona.links);
       const sendRequest = async () => {
         const url = "http://localhost:3000" + "/browse"; // Replace PORT with your server's port
@@ -92,6 +97,7 @@ export default {
       this.selectedPersona = persona;
     },
     deselectPersona() {
+      console.log("Deselecting persona");
       this.selectedPersona = null;
       globalState.selectedPersona = null;
       const sendRequest = async () => {
@@ -101,11 +107,12 @@ export default {
           headers: {
             "Content-Type": "application/json",
           },
-        });
-        globalState.selectedPersona = persona;
+        }).then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+          });
       }
       sendRequest();
-
     },
 
     setDefaultPhoto(persona) {
@@ -120,15 +127,13 @@ export default {
   mounted() {
     this.getUserPersonas(globalState.username).then(() => {
       if (globalState.selectedPersona) {
+        console.log("Global Selected persona:", globalState.selectedPersona);
         const matchedPersona = this.personas.find(persona => persona.id === globalState.selectedPersona.id);
         if (matchedPersona) {
           this.selectedPersona = matchedPersona;
         }
       }
     });
-    console.log("Selected persona:", this.selectedPersona);
-    console.log("personas:", this.personas);
-    console.log("User:", globalState.username);
     window.addEventListener("resize", this.updateWindowSize);
   },
   beforeDestroy() {
