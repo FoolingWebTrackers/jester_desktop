@@ -256,7 +256,7 @@ input {
 .persona-box {
   background: linear-gradient(145deg, rgba(35, 37, 42, 0.7), rgba(40, 43, 48, 0.5));
   min-width: 200px;
-  height: 30vh;
+  height: 36vh;
   border-radius: 20px;
   padding: 1.5em;
   display: flex;
