@@ -1,7 +1,3 @@
-
-
-
-
 # Jester Desktop [![forthebadge](https://forthebadge.com/images/featured/featured-powered-by-electricity.svg)](https://forthebadge.com)
 
 Do you hate being tracked on the internet? 
@@ -51,3 +47,4 @@ For Desktop development, run:
 deno task tauri dev
 ```
 
+This project is licensed under the [Apache License 2.0](./LICENSE).
