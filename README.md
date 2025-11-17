@@ -1,4 +1,4 @@
-# Jester Desktop [![forthebadge](https://forthebadge.com/images/featured/featured-powered-by-electricity.svg)](https://forthebadge.com)
+# Jester Desktop
 
 Do you hate being tracked on the internet? 
 
